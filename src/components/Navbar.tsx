@@ -11,14 +11,12 @@ const NAV_LINKS = [
 ];
 
 /**
- * SKEUOMORPHIC NAVBAR — BRUSHED ALUMINUM INSTRUMENT PANEL
+ * NAVBAR — Bordered Grid Nav Panel
  *
- * Physical Inspiration: Precision-machined aluminum aviation dashboard.
- * - Multi-layer brushed grain: horizontal micro-lines + coarser relief
- * - Panel screws: small circles at the four corners (decorative rivet marks)
- * - Active tab: pressed inward (inset shadow), amber indicator line at top
- * - Scroll depth: panel gains a deeper shadow "lifting off" the desk
- * - All typography treated as engraved or printed on metal
+ * Consistent with the grid framework:
+ * - Outer border matching grid-master
+ * - Nav links as bordered segments
+ * - Active section highlighted with amber border
  */
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -71,72 +69,17 @@ export default function Navbar() {
       id="navbar"
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? "skeuo-navbar-scrolled" : "skeuo-navbar"}`}
     >
-      {/* ── Multi-layer brushed metal texture ── */}
-      {/* Layer A: fine horizontal micro-grain */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: `repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 2px,
-            hsla(40, 15%, 90%, 0.016) 2px,
-            hsla(40, 15%, 90%, 0.016) 3px
-          )`,
-          borderRadius: "inherit",
-          zIndex: 1,
-        }}
-      />
-      {/* Layer B: coarser relief lines */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: `repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 11px,
-            hsla(40, 15%, 90%, 0.008) 11px,
-            hsla(40, 15%, 90%, 0.008) 12px
-          )`,
-          borderRadius: "inherit",
-          zIndex: 1,
-        }}
-      />
-
-      {/* ── Top bevel highlight (light catching top edge) ── */}
+      {/* Top bevel highlight */}
       <div
         className="absolute top-0 left-0 right-0 h-px pointer-events-none"
         style={{ background: "var(--bevel-light)", zIndex: 2 }}
       />
 
-      {/* ── Panel mounting screws (corner rivets) ── */}
-      {[
-        { top: "6px", left: "8px" },
-        { top: "6px", right: "8px" },
-        { bottom: "6px", left: "8px" },
-        { bottom: "6px", right: "8px" },
-      ].map((pos, i) => (
-        <div
-          key={i}
-          className="absolute pointer-events-none hidden sm:block"
-          style={{
-            ...pos,
-            width: "6px",
-            height: "6px",
-            borderRadius: "50%",
-            background: "hsl(var(--surface-0))",
-            border: "1px solid hsl(var(--border))",
-            boxShadow: "inset 1px 1px 1px 0 var(--inset-dark), inset -0.5px -0.5px 0.5px 0 var(--inset-light)",
-            zIndex: 2,
-          }}
-        />
-      ))}
-
       <div
         className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between relative"
         style={{ zIndex: 3 }}
       >
-        {/* ── Logo: Engraved brass nameplate ── */}
+        {/* Logo */}
         <a
           href="#"
           onClick={(e) => handleNavClick(e, "#")}
@@ -159,9 +102,8 @@ export default function Navbar() {
           </span>
         </a>
 
-        {/* ── Desktop nav: mechanical selector tabs ── */}
+        {/* Desktop nav: bordered selector tabs */}
         <div className="hidden md:flex items-center gap-0.5">
-          {/* Recessed track */}
           <div
             className="flex items-center gap-0.5 px-1 py-0.5 rounded-lg"
             style={{
@@ -180,7 +122,6 @@ export default function Navbar() {
                   className={`skeuo-nav-tab ${isActive ? "skeuo-nav-tab-active" : ""}`}
                   style={{ borderRadius: "var(--radius)", position: "relative" }}
                 >
-                  {/* Active indicator: amber hairline at top */}
                   {isActive && (
                     <span
                       style={{
@@ -201,7 +142,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* ── Desktop right actions: hardware buttons ── */}
+        {/* Desktop right actions */}
         <div className="hidden md:flex items-center gap-3">
           <a
             href="https://drive.google.com/file/d/1TvIYNcOn6o4VLie-DnE5bscadkRoxjjv/view?usp=sharing"
@@ -221,7 +162,7 @@ export default function Navbar() {
           </a>
         </div>
 
-        {/* ── Mobile menu toggle: mechanical switch ── */}
+        {/* Mobile menu toggle */}
         <button
           className="md:hidden icon-btn w-10 h-10"
           onClick={() => setMobileOpen(!mobileOpen)}
@@ -231,7 +172,7 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* ── Bottom edge shadow line ── */}
+      {/* Bottom edge */}
       <div
         className="absolute bottom-0 left-0 right-0 h-px pointer-events-none"
         style={{
@@ -241,7 +182,7 @@ export default function Navbar() {
         }}
       />
 
-      {/* ── Mobile menu: pull-down instrument panel ── */}
+      {/* Mobile menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -256,22 +197,6 @@ export default function Navbar() {
               boxShadow: "inset 0 1px 0 0 var(--bevel-light), 0 4px 16px -4px hsla(var(--shadow-color), 0.5)",
             }}
           >
-            {/* Blueprint-style horizontal rule inside mobile menu */}
-            <div
-              className="absolute top-0 left-0 right-0 pointer-events-none"
-              style={{
-                backgroundImage: `repeating-linear-gradient(
-                  90deg,
-                  transparent,
-                  transparent 6px,
-                  hsla(40, 30%, 60%, 0.06) 6px,
-                  hsla(40, 30%, 60%, 0.06) 7px
-                )`,
-                height: "100%",
-                zIndex: 0,
-              }}
-            />
-
             <div className="px-4 py-4 space-y-1" style={{ position: "relative", zIndex: 2 }}>
               {NAV_LINKS.map((l) => {
                 const isActive = activeSection === l.href.replace("#", "");
@@ -298,15 +223,7 @@ export default function Navbar() {
                 );
               })}
 
-              {/* Engraved divider */}
-              <div
-                className="my-2"
-                style={{
-                  height: "1px",
-                  background: "hsl(var(--border))",
-                  boxShadow: "0 1px 0 0 var(--bevel-light)",
-                }}
-              />
+              <div className="grid-divider-h my-2" />
 
               <a
                 href="https://drive.google.com/file/d/1TvIYNcOn6o4VLie-DnE5bscadkRoxjjv/view?usp=sharing"

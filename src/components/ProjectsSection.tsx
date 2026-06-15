@@ -1,33 +1,26 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, ChevronRight } from "lucide-react";
-import SectionDivider from "./SectionDivider";
 import { PROJECTS, CATEGORIES } from "@/data/projects";
 import ProjectCard from "./ProjectCard";
 
 /**
- * PROJECTS SECTION — ENGINEER'S CUTTING MAT
+ * PROJECTS SECTION — 2×2 Bento Grid
  *
- * Physical Inspiration: A self-healing cutting mat on a drafting table.
- * - The background section wrapper (Index.tsx) provides:
- *     diagonal 45° crosshatch lines
- *     red left-margin rule
- * - This component adds:
- *     a recessed "project bay" panel beneath the header
- *     a ruled sub-header with engraved grid count label
- *     filter tabs styled as physical selector switches
- *     project card grid with visible "slot" gutters
- *
- * Scroll parallax:
- *   - Section header drifts at -0.06× (rises slightly as you scroll in)
- *   - Grid drifts at 0× (stays locked to the cutting mat surface)
+ * ┌──────────────────────────────────────────────┐
+ * │ [003 — PROJECTS]  Featured Projects          │
+ * │ [Filter Tabs]                                │
+ * ├──────────────────────┬───────────────────────┤
+ * │ Project              │ Project               │
+ * ├──────────────────────┼───────────────────────┤
+ * │ Project              │ Project               │
+ * ├──────────────────────┴───────────────────────┤
+ * │ [Load More]                                  │
+ * └──────────────────────────────────────────────┘
  */
 export default function ProjectsSection() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [visibleCount, setVisibleCount] = useState(6);
-
-  const { scrollYProgress } = useScroll();
-  const headerY = useTransform(scrollYProgress, [0, 1], [0, -24]);
 
   useEffect(() => {
     setVisibleCount(6);
@@ -44,73 +37,28 @@ export default function ProjectsSection() {
     cat === "All" ? PROJECTS.length : PROJECTS.filter((p) => p.category === cat).length;
 
   return (
-    <section id="projects" className="relative py-16 px-4 sm:px-6 scroll-mt-20">
-      {/* ── Ruled sub-header line (like a cutting mat's numbered edge ruler) ── */}
-      <div
-        className="absolute top-0 left-0 right-0 h-6 pointer-events-none"
-        style={{
-          borderBottom: "1px solid hsl(var(--border))",
-          backgroundImage: `repeating-linear-gradient(
-            90deg,
-            transparent,
-            transparent 9px,
-            hsl(var(--border)) 9px,
-            hsl(var(--border)) 10px
-          )`,
-          opacity: 0.4,
-        }}
-      />
-      {/* ── Ruler tick marks with measurements ── */}
-      {[10, 20, 30, 40, 50, 60, 70, 80, 90].map((pct) => (
-        <div
-          key={pct}
-          className="absolute top-1 pointer-events-none hidden sm:block"
-          style={{
-            left: `${pct}%`,
-            width: "1px",
-            height: pct % 50 === 0 ? "16px" : "8px",
-            background: "hsl(var(--border))",
-            opacity: 0.5,
-          }}
-        />
-      ))}
-
-      {/* ── Precision groove divider ── */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] max-w-4xl">
-        <SectionDivider variant="bolted" />
-      </div>
-
-      <div className="max-w-7xl mx-auto relative z-10">
-        {/* ── Section header ── */}
-        <motion.div
-          style={{ y: headerY }}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-10"
-        >
-          <span className="section-badge mb-4 inline-flex">
-            <Sparkles size={13} />
-            Portfolio
-          </span>
-          <h2 className="text-[1.9rem] md:text-[2.4rem] font-extrabold text-foreground mb-3 tracking-tight">
+    <section id="projects" className="scroll-mt-20">
+      {/* Header bar */}
+      <div className="grid-header-bar">
+        <span className="grid-section-label">003 — Projects</span>
+        <div>
+          <h2 className="text-[1.9rem] md:text-[2.4rem] font-extrabold text-foreground mb-2 tracking-tight">
             Featured <span className="gradient-text">Projects</span>
           </h2>
-          <p className="text-muted-foreground/80 max-w-lg mx-auto text-sm">
+          <p className="text-muted-foreground/80 max-w-lg text-sm">
             Real-world applications built with modern technologies, solving genuine problems.
           </p>
-        </motion.div>
+        </div>
 
-        {/* ── Filter tabs: physical selector switches ── */}
+        {/* Filter tabs */}
         <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
+          initial={{ opacity: 0, scale: 0.9, rotateY: 15 }}
+          whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6, type: "spring", bounce: 0.4 }}
         >
-          {/* Recessed tab track */}
           <div
-            className="flex flex-wrap justify-center gap-2 mb-10 p-1.5 mx-auto w-fit rounded-xl"
+            className="flex flex-wrap gap-2 p-1.5 w-fit rounded-xl"
             style={{
               background: "hsl(var(--surface-0))",
               border: "1px solid hsl(var(--border))",
@@ -152,78 +100,36 @@ export default function ProjectsSection() {
             })}
           </div>
         </motion.div>
+      </div>
 
-        {/* ── Project grid: cutting mat slots ── */}
-        {/* Visible gutter lines between card slots */}
-        <div className="relative">
-          {/* Horizontal slot rule above grid */}
-          <div style={{
-            height: "1px",
-            background: "hsl(var(--border))",
-            boxShadow: "0 1px 0 0 var(--bevel-light)",
-            marginBottom: "20px",
-            opacity: 0.5,
-          }} />
+      {/* Project grid: 2 columns */}
+      <div className="grid-section-inner grid-cols-1 sm:grid-cols-2">
+        <AnimatePresence mode="popLayout">
+          {displayedProjects.map((project, idx) => (
+            <ProjectCard key={project.title} project={project} index={idx} />
+          ))}
+        </AnimatePresence>
+      </div>
 
-          <motion.div
-            layout
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
-          >
-            <AnimatePresence mode="popLayout">
-              {displayedProjects.map((project, idx) => (
-                <ProjectCard key={project.title} project={project} index={idx} />
-              ))}
-            </AnimatePresence>
-          </motion.div>
-
-          {/* Horizontal slot rule below grid */}
-          <div style={{
-            height: "1px",
-            background: "hsl(var(--border))",
-            boxShadow: "0 -1px 0 0 var(--inset-dark)",
-            marginTop: "20px",
-            opacity: 0.4,
-          }} />
-        </div>
-
-        {/* Load More / Show Less */}
+      {/* Load More / GitHub row */}
+      <div className="grid-cell flex flex-col sm:flex-row items-center justify-center gap-6 py-6">
         {filtered.length > 6 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="flex justify-center mt-10"
+          <button
+            onClick={() => setVisibleCount(visibleCount >= filtered.length ? 6 : filtered.length)}
+            className="skeuo-btn skeuo-btn-secondary px-6 py-2.5 text-sm font-semibold"
           >
-            <button
-              onClick={() => setVisibleCount(visibleCount >= filtered.length ? 6 : filtered.length)}
-              className="btn-ghost px-6 py-2.5 rounded-lg text-sm font-semibold transition-all hover:bg-secondary"
-              style={{
-                border: "1px solid hsl(var(--border))",
-                boxShadow: "inset 1px 1px 0 0 var(--bevel-light), inset -1px -1px 0 0 var(--bevel-dark), 1px 2px 4px -1px hsla(var(--shadow-color), 0.25)",
-              }}
-            >
-              {visibleCount >= filtered.length ? "Show Less" : "Load More"}
-            </button>
-          </motion.div>
+            {visibleCount >= filtered.length ? "Show Less" : "Load More"}
+          </button>
         )}
-
-        {/* GitHub link */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="text-center mt-12"
+        <a
+          href="https://github.com/KUSHAGRA-AGRAWAL-0717"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 text-sm font-semibold text-muted-foreground hover:text-accent transition-colors link-underline"
         >
-          <a
-            href="https://github.com/KUSHAGRA-AGRAWAL-0717"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-sm font-semibold text-muted-foreground hover:text-accent transition-colors link-underline"
-          >
-            View all projects on GitHub
-            <ChevronRight size={15} />
-          </a>
-        </motion.div>
+          View all projects on GitHub
+          <ChevronRight size={15} />
+        </a>
       </div>
     </section>
   );
