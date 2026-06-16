@@ -17,7 +17,7 @@ export type Project = {
   description: string;
   tech: string[];
   impact: string;
-  image: string;
+  image?: string;
   video?: string;
   github?: string;
   link?: string;
@@ -52,7 +52,7 @@ export const PROJECTS: Project[] = [
     tech: ["Python", "FastAPI", "RabbitMQ", "Docker", "Kubernetes", "MongoDB", "NGINX"],
     impact:
       "End-to-end scalable workflow supporting upload → convert → notify → download",
-    image: mvpcxImg, // Placeholder, can be swapped with a real screenshot
+    // image removed to avoid duplicate thumbnail
     github: "https://github.com/KUSHAGRA-AGRAWAL-0717/kubernetes-rabbitMq",
     featured: true,
   },
@@ -66,7 +66,7 @@ export const PROJECTS: Project[] = [
     tech: ["Node.js", "Express", "MongoDB", "RabbitMQ", "Docker", "NGINX"],
     impact:
       "Event-driven architecture with centralized API Gateway and long-polling for real-time status",
-    image: defiImg, // Placeholder
+    // image removed to avoid duplicate thumbnail
     github: "https://github.com/KUSHAGRA-AGRAWAL-0717/microservices",
     featured: true,
   },

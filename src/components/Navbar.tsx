@@ -11,36 +11,66 @@ const NAV_LINKS = [
 ];
 
 /**
- * NAVBAR — Bordered Grid Nav Panel
- *
- * Consistent with the grid framework:
- * - Outer border matching grid-master
- * - Nav links as bordered segments
- * - Active section highlighted with amber border
+ * NAVBAR — Clean, Minimal Navigation
+ * Simplified shadows and segmented control. No excessive bevels.
  */
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    const id = href.replace("#", "");
+  // Reusable scroll function
+  const scrollToSection = (href: string) => {
     if (href === "#" || href === "") {
-      e.preventDefault();
       window.scrollTo({ top: 0, behavior: "smooth" });
-      setMobileOpen(false);
       return;
     }
+
+    const id = href.replace("#", "");
+    const target = document.getElementById(id);
+
+    if (target) {
+      const headerOffset = 80;
+      const targetPosition =
+        target.getBoundingClientRect().top + window.scrollY;
+
+      window.scrollTo({
+        top: targetPosition - headerOffset,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
     e.preventDefault();
     setMobileOpen(false);
-    requestAnimationFrame(() => {
-      const target = id ? document.getElementById(id) : null;
-      if (!target) return;
-      const headerOffset = 80;
-      const y = target.getBoundingClientRect().top + window.scrollY - headerOffset;
-      window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
-    });
+    // Use window.location.hash instead of pushState to trigger hashchange event
+    // This ensures the scroll happens immediately
+    window.location.hash = href;
   };
+
+  // Handle hash changes from URL (direct navigation, back/forward buttons, initial load)
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash;
+      if (hash) {
+        // Give DOM time to settle, then scroll
+        setTimeout(() => {
+          scrollToSection(hash);
+        }, 100);
+      }
+    };
+
+    // Call on initial load
+    handleHashChange();
+
+    // Listen for hash changes (back/forward buttons, direct URL navigation)
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -55,8 +85,10 @@ export default function Navbar() {
       const el = document.getElementById(id);
       if (!el) return;
       const obs = new IntersectionObserver(
-        ([entry]) => { if (entry.isIntersecting) setActiveSection(id); },
-        { threshold: 0.35 }
+        ([entry]) => {
+          if (entry.isIntersecting) setActiveSection(id);
+        },
+        { threshold: 0.35 },
       );
       obs.observe(el);
       observers.push(obs);
@@ -69,12 +101,6 @@ export default function Navbar() {
       id="navbar"
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? "skeuo-navbar-scrolled" : "skeuo-navbar"}`}
     >
-      {/* Top bevel highlight */}
-      <div
-        className="absolute top-0 left-0 right-0 h-px pointer-events-none"
-        style={{ background: "var(--bevel-light)", zIndex: 2 }}
-      />
-
       <div
         className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between relative"
         style={{ zIndex: 3 }}
@@ -90,25 +116,20 @@ export default function Navbar() {
             className="font-black text-xl tracking-tight"
             style={{
               color: "hsl(var(--foreground))",
-              textShadow: "0 1px 0 var(--bevel-light), 0 -1px 0 hsla(var(--shadow-color), 0.3)",
               letterSpacing: "-0.03em",
             }}
           >
             KA
-            <span style={{
-              color: "hsl(32, 80%, 55%)",
-              textShadow: "0 1px 0 hsla(40, 80%, 70%, 0.3), 0 -1px 0 hsla(32, 80%, 25%, 0.3)",
-            }}>.</span>
+            <span style={{ color: "hsl(32, 80%, 55%)" }}>.</span>
           </span>
         </a>
 
-        {/* Desktop nav: bordered selector tabs */}
+        {/* Desktop nav: pill-style tabs */}
         <div className="hidden md:flex items-center gap-0.5">
           <div
-            className="flex items-center gap-0.5 px-1 py-0.5 rounded-lg"
+            className="flex items-center gap-0.5 px-1 py-1 rounded-lg"
             style={{
               background: "hsl(var(--surface-0))",
-              boxShadow: "inset 1px 2px 4px -1px var(--inset-dark), inset -1px -1px 2px 0 var(--inset-light)",
               border: "1px solid hsl(var(--border))",
             }}
           >
@@ -120,7 +141,10 @@ export default function Navbar() {
                   href={l.href}
                   onClick={(e) => handleNavClick(e, l.href)}
                   className={`skeuo-nav-tab ${isActive ? "skeuo-nav-tab-active" : ""}`}
-                  style={{ borderRadius: "var(--radius)", position: "relative" }}
+                  style={{
+                    borderRadius: "var(--radius)",
+                    position: "relative",
+                  }}
                 >
                   {isActive && (
                     <span
@@ -131,7 +155,8 @@ export default function Navbar() {
                         right: "8px",
                         height: "2px",
                         borderRadius: "1px",
-                        background: "linear-gradient(90deg, transparent, hsl(32, 80%, 55%), transparent)",
+                        background:
+                          "linear-gradient(90deg, transparent, hsl(32, 80%, 55%), transparent)",
                       }}
                     />
                   )}
@@ -175,11 +200,7 @@ export default function Navbar() {
       {/* Bottom edge */}
       <div
         className="absolute bottom-0 left-0 right-0 h-px pointer-events-none"
-        style={{
-          background: "hsl(var(--border))",
-          boxShadow: "0 1px 3px 0 hsla(var(--shadow-color), 0.2)",
-          zIndex: 2,
-        }}
+        style={{ background: "hsl(var(--border))", zIndex: 2 }}
       />
 
       {/* Mobile menu */}
@@ -194,10 +215,13 @@ export default function Navbar() {
             style={{
               background: "hsl(var(--surface-1))",
               borderTop: "1px solid hsl(var(--border))",
-              boxShadow: "inset 0 1px 0 0 var(--bevel-light), 0 4px 16px -4px hsla(var(--shadow-color), 0.5)",
+              boxShadow: "0 4px 16px -4px hsla(var(--shadow-color), 0.4)",
             }}
           >
-            <div className="px-4 py-4 space-y-1" style={{ position: "relative", zIndex: 2 }}>
+            <div
+              className="px-4 py-4 space-y-1"
+              style={{ position: "relative", zIndex: 2 }}
+            >
               {NAV_LINKS.map((l) => {
                 const isActive = activeSection === l.href.replace("#", "");
                 return (
@@ -212,7 +236,6 @@ export default function Navbar() {
                         ? {
                             color: "hsl(32, 80%, 55%)",
                             background: "hsl(var(--surface-0))",
-                            boxShadow: "inset 1px 2px 4px -1px var(--inset-dark), inset -1px -1px 2px 0 var(--inset-light)",
                             borderLeft: "2px solid hsl(32, 80%, 55%)",
                           }
                         : { color: "hsl(var(--muted-foreground))" }),
@@ -230,7 +253,10 @@ export default function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium transition-all duration-150"
-                style={{ borderRadius: "var(--radius)", color: "hsl(var(--muted-foreground))" }}
+                style={{
+                  borderRadius: "var(--radius)",
+                  color: "hsl(var(--muted-foreground))",
+                }}
               >
                 <Download size={15} />
                 Download Resume

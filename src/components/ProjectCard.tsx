@@ -9,22 +9,14 @@ const CATEGORY_STYLES: Record<string, string> = {
   SaaS: "badge-saas",
   AI: "badge-ai",
   "Web App": "badge-webapp",
+  Backend: "badge-backend",
 };
 
 /**
- * PROJECT CARD — Grid Cell with Internal Dividers
+ * PROJECT CARD — Clean, Content-Focused
  *
- * ┌──────────────────────┐
- * │ Image/Video viewport │
- * ├──────────────────────┤
- * │ Title + Description  │
- * ├──────────────────────┤
- * │ Tech Stack Chips     │
- * ├──────────────────────┤
- * │ Impact Readout       │
- * ├──────────────────────┤
- * │ Action Buttons       │
- * └──────────────────────┘
+ * Image → Title + Description + Impact → Tech Tags → Links
+ * No corner marks. No 3D rotations. No impact callout box.
  */
 function ProjectCardInner(
   { project, index }: { project: Project; index: number },
@@ -37,43 +29,19 @@ function ProjectCardInner(
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, scale: 0.9, rotateX: 10, rotateY: index % 2 === 0 ? 10 : -10 }}
-      whileInView={{ opacity: 1, scale: 1, rotateX: 0, rotateY: 0 }}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
-      transition={{
-        delay: index * 0.1,
-        duration: 0.6,
-        type: "spring",
-        bounce: 0.35,
-      }}
+      transition={{ delay: index * 0.08, duration: 0.5 }}
       className="grid-cell p-0 flex flex-col group"
     >
       {/* ── Image / Video viewport ── */}
       <div
         className="relative aspect-video overflow-hidden flex-shrink-0"
         style={{
-          boxShadow: "inset 2px 2px 6px -1px var(--inset-dark), inset -1px -1px 3px 0 var(--inset-light)",
           background: "hsl(var(--surface-0))",
         }}
       >
-        {/* Corner registration marks */}
-        {[
-          { top: "6px", left: "6px", borderTop: "1.5px solid", borderLeft: "1.5px solid" },
-          { top: "6px", right: "6px", borderTop: "1.5px solid", borderRight: "1.5px solid" },
-          { bottom: "6px", left: "6px", borderBottom: "1.5px solid", borderLeft: "1.5px solid" },
-          { bottom: "6px", right: "6px", borderBottom: "1.5px solid", borderRight: "1.5px solid" },
-        ].map((style, i) => (
-          <div
-            key={i}
-            className="absolute w-3 h-3 pointer-events-none z-10"
-            style={{
-              ...style,
-              borderColor: "hsla(32, 80%, 55%, 0.25)",
-              borderRadius: "1px",
-            }}
-          />
-        ))}
-
         <AnimatePresence mode="wait">
           {showVideo && project.video ? (
             <motion.div
@@ -105,12 +73,20 @@ function ProjectCardInner(
               exit={{ opacity: 0 }}
               className="relative w-full h-full"
             >
-              <img
-                src={project.image}
-                alt={project.title}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                loading="lazy"
-              />
+              {project.image ? (
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  loading="lazy"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-surface-1 to-background border-b border-border/50">
+                  <span className="text-6xl font-extrabold text-foreground/20 tracking-tighter mix-blend-overlay">
+                    {project.title.substring(0, 2).toUpperCase()}
+                  </span>
+                </div>
+              )}
               {/* Overlay on hover */}
               <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2">
                 {project.video && (
@@ -152,7 +128,6 @@ function ProjectCardInner(
                   style={{
                     background: "hsl(var(--surface-0))",
                     border: "1px solid hsl(var(--border))",
-                    boxShadow: "inset 1px 1px 2px -1px var(--inset-dark)",
                   }}
                 >
                   {project.year}
@@ -163,15 +138,18 @@ function ProjectCardInner(
         </AnimatePresence>
       </div>
 
-      {/* ── Card body with internal dividers ── */}
+      {/* ── Card body ── */}
       <div className="flex flex-col flex-1">
-        {/* Title + Description */}
+        {/* Title + Description + Impact (merged) */}
         <div className="p-4 pb-3">
-          <h3 className="text-base font-bold text-foreground group-hover:text-accent transition-colors duration-200 mb-1">
+          <h3 className="text-base font-bold text-foreground group-hover:text-accent transition-colors duration-200 mb-1.5">
             {project.title}
           </h3>
-          <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
+          <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2 mb-2">
             {project.description}
+          </p>
+          <p className="text-xs font-medium text-accent/80">
+            {project.impact}
           </p>
         </div>
 
@@ -187,7 +165,6 @@ function ProjectCardInner(
                 background: "hsl(var(--surface-0))",
                 border: "1px solid hsl(var(--border))",
                 color: "hsl(var(--muted-foreground))",
-                boxShadow: "inset 1px 1px 2px -1px var(--inset-dark), inset -0.5px -0.5px 1px 0 var(--inset-light)",
               }}
             >
               {t}
@@ -200,7 +177,6 @@ function ProjectCardInner(
                 background: "hsl(var(--surface-0))",
                 border: "1px solid hsl(var(--border))",
                 color: "hsl(var(--muted-foreground))",
-                boxShadow: "inset 1px 1px 2px -1px var(--inset-dark), inset -0.5px -0.5px 1px 0 var(--inset-light)",
               }}
             >
               +{project.tech.length - 4}
@@ -210,23 +186,7 @@ function ProjectCardInner(
 
         <div className="grid-divider-h" />
 
-        {/* Impact */}
-        <div
-          className="text-xs font-medium leading-snug py-2.5 px-4 mx-4 my-3"
-          style={{
-            color: "hsl(32, 75%, 58%)",
-            background: "hsl(var(--surface-0))",
-            borderLeft: "2px solid hsl(32, 80%, 55%)",
-            borderRadius: "0 4px 4px 0",
-            boxShadow: "inset 1px 1px 3px -1px var(--inset-dark)",
-          }}
-        >
-          {project.impact}
-        </div>
-
-        <div className="grid-divider-h" />
-
-        {/* Action buttons */}
+        {/* Action links — simpler, cleaner */}
         <div className="flex gap-0">
           <a
             href={githubLink}

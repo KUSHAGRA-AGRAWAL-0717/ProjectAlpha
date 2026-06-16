@@ -1,25 +1,16 @@
 import { useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  Mail,
-  Phone,
-  MapPin,
-  Send,
-  Github,
-  Linkedin,
-  Code,
-  CheckCircle,
-  AlertCircle,
-} from "lucide-react";
+import { motion } from "framer-motion";
+import { Send, Mail, Phone, MapPin, Github, Linkedin, Code } from "lucide-react";
 import emailjs from "@emailjs/browser";
+import SceneVideo from "./Scene.mp4";
 
-const CONTACT_ITEMS = [
+const CONTACT_INFO = [
   { icon: Mail, label: "Email", value: "kushagraagrawal.9672@gmail.com", href: "mailto:kushagraagrawal.9672@gmail.com" },
   { icon: Phone, label: "Phone", value: "+91 9672048846", href: "tel:+919672048846" },
   { icon: MapPin, label: "Location", value: "India", href: null },
 ];
 
-const SOCIALS = [
+const SOCIAL_LINKS = [
   { icon: Github, href: "https://github.com/KUSHAGRA-AGRAWAL-0717", label: "GitHub" },
   { icon: Linkedin, href: "https://linkedin.com/in/kushagraagrawal017", label: "LinkedIn" },
   { icon: Code, href: "https://leetcode.com/u/Kushagra_0717", label: "LeetCode" },
@@ -27,91 +18,51 @@ const SOCIALS = [
 ];
 
 /**
- * CONTACT SECTION — 40/60 Split
- *
- * ┌──────────────────────────────────────────────┐
- * │ [006 — CONTACT]  Let's Work Together         │
- * ├─────────────────────┬────────────────────────┤
- * │  Available Badge    │  Contact Form          │
- * │  Contact Info       │  ┌──────┬──────┐       │
- * │  Social Links       │  │ Name │Email │       │
- * │                     │  ├──────┴──────┤       │
- * │                     │  │ Phone       │       │
- * │                     │  ├─────────────┤       │
- * │                     │  │ Subject     │       │
- * │                     │  ├─────────────┤       │
- * │                     │  │ Message     │       │
- * │                     │  ├─────────────┤       │
- * │                     │  │ [Send]      │       │
- * │                     │  └─────────────┘       │
- * └─────────────────────┴────────────────────────┘
+ * CONTACT SECTION — Clean Split: Info + Form
  */
 export default function ContactSection() {
   const formRef = useRef<HTMLFormElement>(null);
   const [sending, setSending] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState("");
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
 
-  const sendEmail = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formRef.current || sending) return;
     setSending(true);
-    setError("");
-    setSuccess(false);
+    setStatus("idle");
+    try {
+      const form = formRef.current;
+      const name = (form.elements.namedItem("user_name") as HTMLInputElement)?.value;
+      const email = (form.elements.namedItem("user_email") as HTMLInputElement)?.value;
+      const phone = (form.elements.namedItem("user_phone") as HTMLInputElement)?.value;
+      const subject = (form.elements.namedItem("subject") as HTMLInputElement)?.value;
+      const message = (form.elements.namedItem("message") as HTMLTextAreaElement)?.value;
+      const fullMessage = `Name: ${name}\nEmail: ${email}\nPhone: ${phone || "N/A"}\nSubject: ${subject}\n\nMessage:\n${message}`;
 
-    const form = formRef.current;
-    if (!form) return;
-
-    const name = (form.querySelector('input[name="user_name"]') as HTMLInputElement)?.value || "";
-    const email = (form.querySelector('input[name="user_email"]') as HTMLInputElement)?.value || "";
-    const phone = (form.querySelector('input[name="user_phone"]') as HTMLInputElement)?.value || "";
-    const subject = (form.querySelector('input[name="user_subject"]') as HTMLInputElement)?.value || "";
-    const message = (form.querySelector('textarea[name="message"]') as HTMLTextAreaElement)?.value || "";
-
-    const fullMessage = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nSubject: ${subject}\nMessage: ${message}`;
-
-    const injectHidden = (fieldName: string, value: string) => {
-      let el = form.querySelector(`input[name="${fieldName}"]`) as HTMLInputElement;
-      if (!el) {
-        el = document.createElement("input");
-        el.type = "hidden";
-        el.name = fieldName;
-        form.appendChild(el);
-      }
-      el.value = value;
-    };
-
-    injectHidden("hidden_phone", phone);
-    injectHidden("hidden_email", email);
-    injectHidden("hidden_subject", subject);
-
-    const msgField = form.querySelector('textarea[name="message"]') as HTMLTextAreaElement;
-    if (msgField) msgField.value = fullMessage;
-
-    emailjs
-      .sendForm(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        form,
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
-      )
-      .then(() => {
-        setSending(false);
-        setSuccess(true);
-        formRef.current?.reset();
-        setTimeout(() => setSuccess(false), 4000);
-      })
-      .catch((err) => {
-        setSending(false);
-        setError("Failed to send. Please try again or email me directly.");
-        console.error("FAILED...", err?.text || err);
-      });
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID || "service_gmail",
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "template_contact",
+        {
+          from_name: name,
+          reply_to: email,
+          subject,
+          message: fullMessage,
+        },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY || ""
+      );
+      setStatus("success");
+      form.reset();
+    } catch {
+      setStatus("error");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
     <section id="contact" className="scroll-mt-20">
       {/* Header bar */}
       <div className="grid-header-bar">
-        <span className="grid-section-label">006 — Contact</span>
         <div>
           <h2 className="text-[1.9rem] md:text-[2.4rem] font-extrabold text-foreground mb-2 tracking-tight">
             Let's Work <span className="gradient-text">Together</span>
@@ -122,219 +73,195 @@ export default function ContactSection() {
         </div>
       </div>
 
-      {/* 40/60 Split */}
-      <div className="grid-section-inner grid-cols-1 md:grid-cols-[2fr_3fr]">
+      {/* Split: Info | Form */}
+      <div className="grid-section-inner grid-cols-1 lg:grid-cols-[2fr_3fr]">
 
         {/* ── LEFT: Contact info ── */}
         <motion.div
-          initial={{ opacity: 0, x: -50, rotateY: -10 }}
-          whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.7, type: "spring", bounce: 0.2 }}
-          className="grid-cell flex flex-col gap-6"
+          transition={{ duration: 0.5 }}
+          className="grid-cell flex flex-col relative overflow-hidden group"
         >
-          {/* Available badge */}
-          <div
-            className="p-4 rounded-lg"
-            style={{
-              background: "hsl(var(--surface-0))",
-              border: "1px solid hsl(var(--border))",
-              boxShadow: "inset 2px 2px 6px -1px var(--inset-dark), inset -1px -1px 3px 0 var(--inset-light)",
-            }}
-          >
-            <div className="flex items-center gap-2.5 mb-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse-slow" />
-              <span className="text-sm font-bold text-foreground">Available for Work</span>
-            </div>
-            <p className="text-xs text-muted-foreground leading-relaxed">
-              Currently accepting freelance projects and full-time opportunities.
-            </p>
+          {/* Full Left Column Background Video */}
+          <div className="absolute inset-0 z-0">
+             <video autoPlay muted loop playsInline className="w-full h-full object-cover opacity-10 group-hover:opacity-20 transition-opacity duration-300 mix-blend-screen">
+               <source src={SceneVideo} type="video/mp4" />
+             </video>
+             <div className="absolute inset-0 bg-gradient-to-br from-background/90 via-background/70 to-background/30" />
           </div>
 
-          <div className="grid-divider-h" />
+          <div className="relative z-10 flex flex-col h-full">
+            {/* Availability card */}
+            <div className="skeuo-panel rounded-lg p-4 mb-4 relative overflow-hidden bg-background/50 backdrop-blur-md border border-border/50">
+              <div className="flex items-center gap-2 mb-1.5">
+                <span className="w-2 h-2 rounded-full animate-pulse-slow" style={{ background: "hsl(150, 60%, 50%)", boxShadow: "0 0 6px hsla(150, 60%, 50%, 0.3)" }} />
+                <span className="text-sm font-bold text-foreground">Available for Work</span>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                Currently accepting freelance projects and full-time opportunities.
+              </p>
+            </div>
 
-          {/* Contact details */}
-          <div>
-            <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">
+            <div className="grid-divider-h mb-4 opacity-50" />
+
+            {/* Contact details */}
+            <h3 className="text-xs font-bold text-foreground uppercase tracking-widest mb-4 drop-shadow-sm">
               Contact Information
             </h3>
-            <div className="space-y-4">
-              {CONTACT_ITEMS.map((item) => (
-                <motion.div
-                  key={item.label}
-                  whileHover={{ x: 3 }}
-                  className="flex items-center gap-3 group"
-                >
-                  <div className="icon-btn w-9 h-9 rounded-lg flex-shrink-0 group-hover:border-accent/40">
-                    <item.icon size={15} />
+
+            <div className="space-y-4 mb-4">
+              {CONTACT_INFO.map((c) => (
+                <div key={c.label} className="flex items-center gap-3">
+                  <div className="icon-btn w-9 h-9 shrink-0 bg-background/50 backdrop-blur-sm">
+                    <c.icon size={15} />
                   </div>
-                  <div className="min-w-0">
-                    <p className="text-xs text-muted-foreground">{item.label}</p>
-                    {item.href ? (
+                  <div>
+                    <p className="text-[10px] text-muted-foreground uppercase tracking-wider">{c.label}</p>
+                    {c.href ? (
                       <a
-                        href={item.href}
-                        className="text-sm font-medium text-foreground hover:text-accent transition-colors truncate block"
+                        href={c.href}
+                        className="text-sm font-semibold text-foreground hover:text-accent transition-colors link-underline drop-shadow-sm"
                       >
-                        {item.value}
+                        {c.value}
                       </a>
                     ) : (
-                      <p className="text-sm font-medium text-foreground">{item.value}</p>
+                      <p className="text-sm font-semibold text-foreground drop-shadow-sm">{c.value}</p>
                     )}
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
-          </div>
 
-          <div className="grid-divider-h" />
+            <div className="grid-divider-h mb-4 opacity-50" />
 
-          {/* Social links */}
-          <div>
-            <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">
+            {/* Social links */}
+            <h3 className="text-xs font-bold text-foreground uppercase tracking-widest mb-3 drop-shadow-sm">
               Connect With Me
             </h3>
-            <div className="flex gap-2">
-              {SOCIALS.map((s) => (
+            <div className="flex gap-2 mt-auto">
+              {SOCIAL_LINKS.map((s) => (
                 <motion.a
                   key={s.label}
                   href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  whileHover={{ y: -3 }}
-                  className="icon-btn w-10 h-10 rounded-lg"
+                  whileHover={{ y: -2 }}
+                  className="icon-btn w-10 h-10 bg-background/50 backdrop-blur-sm"
                 >
-                  <s.icon size={16} />
+                  <s.icon size={17} />
                 </motion.a>
               ))}
             </div>
           </div>
         </motion.div>
 
-        {/* ── RIGHT: Contact form ── */}
+        {/* ── RIGHT: Form ── */}
         <motion.div
-          initial={{ opacity: 0, x: 50, rotateY: 10 }}
-          whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
-          transition={{ delay: 0.15, duration: 0.7, type: "spring", bounce: 0.2 }}
+          transition={{ delay: 0.1, duration: 0.5 }}
           className="grid-cell"
         >
-          <form
-            ref={formRef}
-            onSubmit={sendEmail}
-            className="space-y-5"
-          >
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
+            {/* Name + Email row */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
-                  Name <span className="text-accent">*</span>
+                <label htmlFor="user_name" className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-2 block">
+                  Name <span className="text-destructive">*</span>
                 </label>
                 <input
+                  type="text"
+                  id="user_name"
                   name="user_name"
                   required
-                  className="input-field input-focus-ripple skeuo-pressed-plate"
+                  className="input-field input-focus-ripple"
                   placeholder="John Doe"
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
-                  Email <span className="text-accent">*</span>
+                <label htmlFor="user_email" className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-2 block">
+                  Email <span className="text-destructive">*</span>
                 </label>
                 <input
-                  name="user_email"
                   type="email"
+                  id="user_email"
+                  name="user_email"
                   required
-                  className="input-field input-focus-ripple skeuo-pressed-plate"
+                  className="input-field input-focus-ripple"
                   placeholder="john@example.com"
                 />
               </div>
             </div>
 
+            {/* Phone */}
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+              <label htmlFor="user_phone" className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-2 block">
                 Phone
               </label>
               <input
-                name="user_phone"
                 type="tel"
-                className="input-field input-focus-ripple skeuo-pressed-plate"
+                id="user_phone"
+                name="user_phone"
+                className="input-field input-focus-ripple"
                 placeholder="+1 (555) 000-0000"
               />
             </div>
 
+            {/* Subject */}
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
-                Subject <span className="text-accent">*</span>
+              <label htmlFor="subject" className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-2 block">
+                Subject <span className="text-destructive">*</span>
               </label>
               <input
-                name="user_subject"
+                type="text"
+                id="subject"
+                name="subject"
                 required
-                className="input-field input-focus-ripple skeuo-pressed-plate"
+                className="input-field input-focus-ripple"
                 placeholder="Project Inquiry"
               />
             </div>
 
+            {/* Message */}
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
-                Message <span className="text-accent">*</span>
+              <label htmlFor="message" className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-2 block">
+                Message <span className="text-destructive">*</span>
               </label>
               <textarea
+                id="message"
                 name="message"
                 required
                 rows={5}
-                className="input-field input-focus-ripple resize-none skeuo-pressed-plate"
+                className="input-field input-focus-ripple resize-none"
                 placeholder="Tell me about your project..."
               />
             </div>
 
-            <motion.button
+            {/* Submit */}
+            <button
               type="submit"
               disabled={sending}
-              whileHover={{ scale: 1.008 }}
-              whileTap={{ scale: 0.995 }}
-              className="btn-primary btn-stamp w-full rounded-lg py-3.5 text-sm gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+              className="skeuo-btn skeuo-btn-primary w-full py-3 text-sm font-semibold flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {sending ? (
-                <>
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ repeat: Infinity, duration: 0.9, ease: "linear" }}
-                    className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full"
-                  />
-                  Sending...
-                </>
-              ) : (
-                <>
-                  Send Message
-                  <Send size={15} />
-                </>
-              )}
-            </motion.button>
+              {sending ? "Sending..." : "Send Message"}
+              <Send size={15} />
+            </button>
 
-            <AnimatePresence>
-              {success && (
-                <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  className="flex items-center justify-center gap-2 text-emerald-400 text-sm font-medium py-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20"
-                >
-                  <CheckCircle size={15} />
-                  Message sent! I'll reply within 24 hours.
-                </motion.div>
-              )}
-              {error && (
-                <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  className="flex items-center justify-center gap-2 text-destructive text-sm py-2 rounded-lg bg-destructive/10 border border-destructive/20"
-                >
-                  <AlertCircle size={15} />
-                  {error}
-                </motion.div>
-              )}
-            </AnimatePresence>
+            {/* Status messages */}
+            {status === "success" && (
+              <p className="text-emerald-400 text-sm text-center font-medium mt-2">
+                Message sent successfully! I'll get back to you soon.
+              </p>
+            )}
+            {status === "error" && (
+              <p className="text-destructive text-sm text-center font-medium mt-2">
+                Failed to send message. Please try again or email me directly.
+              </p>
+            )}
           </form>
         </motion.div>
       </div>

@@ -35,14 +35,11 @@ export default function FooterSection() {
         {/* Brand */}
         <div className="grid-cell">
           <motion.span
-            initial={{ opacity: 0, scale: 1.08, filter: "blur(2px)" }}
-            whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            initial={{ opacity: 0, y: 8 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
             className="font-extrabold text-xl tracking-tight text-foreground inline-block px-2 py-1 rounded-md"
-            style={{
-              textShadow: "0 1px 0 var(--bevel-light), 0 -1px 0 hsla(var(--shadow-color), 0.3)",
-            }}
           >
             KA<span className="text-accent">.</span>
           </motion.span>

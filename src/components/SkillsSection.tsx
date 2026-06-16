@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Code, Sparkles } from "lucide-react";
+import Coding2Video from "./Coding (2).mp4";
 
 const SKILL_GROUPS = [
   { title: "Languages", icon: "{ }", skills: ["Python", "TypeScript", "JavaScript", "C++"] },
@@ -12,34 +12,17 @@ const SKILL_GROUPS = [
   { title: "Testing Automation", icon: "✓", skills: ["Playwright", "Selenium", "Cypress"] },
 ];
 
-const ALL_TAGS = [
-  "Python", "TypeScript", "React", "Next.js", "Node.js", "FastAPI",
-  "Apache Kafka", "RabbitMQ", "Docker", "Kubernetes", "Terraform", "AWS",
-  "LangChain", "AutoGPT", "OpenAI API", "GitHub Actions", "GitLab CI/CD",
-  "Prometheus", "Grafana", "Datadog", "n8n", "Zapier", "Make (Integromat)",
-  "Trigger.dev", "Inngest", "Playwright", "Selenium", "Cypress"
-];
-
 /**
- * SKILLS SECTION — 4-Column Multi Grid
+ * SKILLS SECTION — Clean 4-Column Grid
  *
- * ┌──────────────────────────────────────────────┐
- * │ [004 — SKILLS]  Technical Skills             │
- * ├───────────┬───────────┬───────────┬──────────┤
- * │ Languages │ Frontend  │ Backend   │ AI/ML    │
- * ├───────────┼───────────┼───────────┼──────────┤
- * │ Cloud     │ CI/CD     │ Automation│ Testing  │
- * ├───────────┴───────────┴───────────┴──────────┤
- * │ [Full Technology Stack — Marquee Strip]       │
- * └──────────────────────────────────────────────┘
+ * No marquee. No blur entrance. Simple, scannable layout.
  */
 export default function SkillsSection() {
   return (
     <section id="skills" className="scroll-mt-20">
       {/* Header bar */}
-      <div className="grid-header-bar">
-        <span className="grid-section-label">004 — Skills</span>
-        <div>
+      <div className="grid-header-bar flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div className="flex-1">
           <h2 className="text-[1.9rem] md:text-[2.4rem] font-extrabold text-foreground mb-2 tracking-tight">
             Technical <span className="gradient-text">Skills</span>
           </h2>
@@ -47,17 +30,26 @@ export default function SkillsSection() {
             Proficient in modern technologies for building scalable, production-ready applications.
           </p>
         </div>
+        
+        {/* High-quality Header Video Banner */}
+        <div className="hidden md:block w-48 h-24 rounded-xl overflow-hidden border-2 border-border/50 shadow-md bg-white flex-shrink-0 relative">
+           <video autoPlay muted loop playsInline className="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-300">
+             <source src={Coding2Video} type="video/mp4" />
+           </video>
+           <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none" />
+        </div>
+
       </div>
 
-      {/* 4-column skill grid (2 on mobile, 4 on desktop) */}
+      {/* 4-column skill grid */}
       <div className="grid-section-inner grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {SKILL_GROUPS.map((group, gi) => (
           <motion.div
             key={group.title}
-            initial={{ opacity: 0, scale: 0.85, filter: "blur(4px)" }}
-            whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
-            transition={{ delay: gi * 0.08, duration: 0.5, type: "spring", bounce: 0.4 }}
+            transition={{ delay: gi * 0.06, duration: 0.4 }}
             className="grid-cell group"
           >
             {/* Card header */}
@@ -82,27 +74,6 @@ export default function SkillsSection() {
             </div>
           </motion.div>
         ))}
-      </div>
-
-      {/* Full-width technology marquee strip */}
-      <div className="grid-cell py-5">
-        <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-4 flex items-center gap-2">
-          <Sparkles size={13} className="text-accent" />
-          Full Technology Stack
-        </p>
-        <div className="overflow-hidden">
-          <div className="flex gap-2 skill-marquee w-max">
-            {[...ALL_TAGS, ...ALL_TAGS].map((tag, i) => (
-              <motion.span
-                key={`${tag}-${i}`}
-                whileHover={{ y: -2 }}
-                className="skill-chip cursor-default text-xs flex-shrink-0"
-              >
-                {tag}
-              </motion.span>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   );
