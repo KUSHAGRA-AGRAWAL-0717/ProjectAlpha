@@ -8,7 +8,7 @@ import ContactSection from "@/components/ContactSection";
 import FooterSection from "@/components/FooterSection";
 import ThemeToggle from "@/components/ThemeToggle";
 
-import GlobalBgVideo from "@/components/Background looping animation.mp4";
+import SceneVideo from "@/components/Scene.mp4";
 
 /**
  * PORTFOLIO — Clean Grid Layout
@@ -19,10 +19,17 @@ import GlobalBgVideo from "@/components/Background looping animation.mp4";
 const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground relative">
-      {/* GLOBAL AMBIENT VIDEO */}
+      {/* GLOBAL AMBIENT VIDEO BACKGROUND */}
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <video autoPlay muted loop playsInline className="w-full h-full object-cover opacity-[0.03] dark:opacity-[0.02] mix-blend-screen pointer-events-none" style={{ filter: "blur(16px) contrast(1.5)" }}>
-          <source src={GlobalBgVideo} type="video/mp4" />
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-full object-cover opacity-[0.08] dark:opacity-[0.12] mix-blend-overlay pointer-events-none"
+          style={{ filter: "blur(2px)" }}
+        >
+          <source src={SceneVideo} type="video/mp4" />
         </video>
       </div>
 
@@ -33,7 +40,6 @@ const Index = () => {
       ══════════════════════════════════════════════ */}
       <main className="relative z-10 pt-20 pb-0 px-3 sm:px-5 max-w-7xl mx-auto">
         <div className="grid-master">
-
           {/* ── HERO ── */}
           <div className="grid-section">
             <HeroSection />
@@ -68,7 +74,6 @@ const Index = () => {
           <div className="grid-section">
             <FooterSection />
           </div>
-
         </div>
       </main>
 
