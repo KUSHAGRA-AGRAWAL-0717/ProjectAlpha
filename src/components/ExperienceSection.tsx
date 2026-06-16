@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { GraduationCap, Trophy, Calendar } from "lucide-react";
+import { GraduationCap, Trophy, Calendar, Users } from "lucide-react";
 import CandidateVideo from "./andidate.mp4";
 
 const EXPERIENCE = [
@@ -229,7 +229,8 @@ export default function ExperienceSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="grid-cell flex-1"
+            className="grid-cell"
+            style={{ borderBottom: "1px solid var(--grid-border-color)" }}
           >
             <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-widest mb-4 flex items-center gap-2">
               <Trophy size={14} className="text-accent" />
@@ -256,6 +257,57 @@ export default function ExperienceSection() {
                   </div>
                 </motion.div>
               ))}
+            </div>
+          </motion.div>
+
+          {/* Roles & Leadership */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+            className="grid-cell flex-1"
+          >
+            <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-widest mb-4 flex items-center gap-2">
+              <Users size={14} className="text-accent" />
+              Roles & Leadership
+            </h3>
+            <div className="space-y-4">
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.15 }}
+                className="flex items-start gap-3 group"
+              >
+                <span className="text-xl flex-shrink-0 mt-0.5">🚀</span>
+                <div>
+                  <h4 className="text-sm font-bold text-foreground group-hover:text-accent transition-colors duration-200">
+                    Club Cybernauts
+                  </h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">
+                    Core Member / Leadership Role
+                  </p>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="flex items-start gap-3 group"
+              >
+                <span className="text-xl flex-shrink-0 mt-0.5">💡</span>
+                <div>
+                  <h4 className="text-sm font-bold text-foreground group-hover:text-accent transition-colors duration-200">
+                    Google Developer Student Clubs (GDGC)
+                  </h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">
+                    Core Team Member
+                  </p>
+                </div>
+              </motion.div>
             </div>
           </motion.div>
         </div>

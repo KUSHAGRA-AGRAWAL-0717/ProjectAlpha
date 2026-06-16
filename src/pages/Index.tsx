@@ -7,6 +7,7 @@ import ExperienceSection from "@/components/ExperienceSection";
 import ContactSection from "@/components/ContactSection";
 import FooterSection from "@/components/FooterSection";
 import ThemeToggle from "@/components/ThemeToggle";
+import CustomCursor from "@/components/CustomCursor";
 
 import SceneVideo from "@/components/Scene.mp4";
 
@@ -19,6 +20,7 @@ import SceneVideo from "@/components/Scene.mp4";
 const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground relative">
+      <CustomCursor />
       {/* GLOBAL AMBIENT VIDEO BACKGROUND */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <video
