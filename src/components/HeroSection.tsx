@@ -20,7 +20,7 @@ const ROLES = [
 const STATS = [
   { value: "10+", label: "Projects Shipped" },
   { value: "3", label: "Internships" },
-  { value: "850+", label: "LeetCode Problems" },
+  { value: "850+", label: "DSA Problems" },
   { value: "NIT", label: "Jalandhar" },
 ];
 
