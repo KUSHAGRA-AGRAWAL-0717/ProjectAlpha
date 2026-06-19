@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { GraduationCap, Trophy, Calendar, Users } from "lucide-react";
 import CandidateVideo from "./andidate.mp4";
+import TiltCard from "./ui/TiltCard";
 
 const EXPERIENCE = [
   {
@@ -180,47 +181,49 @@ export default function ExperienceSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ delay: 0.1, duration: 0.5 }}
-            className="grid-cell relative overflow-hidden group"
+            className="grid-cell p-0 relative overflow-hidden group"
             style={{ borderBottom: "1px solid var(--grid-border-color)" }}
           >
-            {/* Full Background Video */}
-            <div className="absolute inset-0 z-0">
-              <video autoPlay muted loop playsInline className="w-full h-full object-cover opacity-30 group-hover:opacity-40 transition-opacity duration-300">
-                <source src={CandidateVideo} type="video/mp4" />
-              </video>
-              <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/60 to-background/30" />
-            </div>
-
-            <div className="relative z-10">
-              <h3 className="text-sm font-bold text-foreground uppercase tracking-widest flex items-center gap-2 mb-6">
-                <GraduationCap size={14} className="text-accent" />
-                Education
-              </h3>
-
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-lg icon-btn flex-shrink-0 text-lg flex items-center justify-center bg-background/50 backdrop-blur-sm border border-border/50">
-                  🎓
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="text-sm font-bold text-foreground leading-snug">
-                    B.Tech — Information Technology
-                  </h4>
-                  <p className="text-xs font-semibold text-accent/90 mt-1">
-                    NIT Jalandhar
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-0.5 font-mono">
-                    2023 – Present
-                  </p>
-                </div>
+            <TiltCard intensity={5} className="w-full h-full p-5 sm:p-6">
+              {/* Full Background Video */}
+              <div className="absolute inset-0 z-0 rounded-lg overflow-hidden">
+                <video autoPlay muted loop playsInline className="w-full h-full object-cover opacity-30 group-hover:opacity-40 transition-opacity duration-300">
+                  <source src={CandidateVideo} type="video/mp4" />
+                </video>
+                <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/60 to-background/30" />
               </div>
 
-              <div className="grid-divider-h my-4 opacity-50" />
+              <div className="relative z-10">
+                <h3 className="text-sm font-bold text-foreground uppercase tracking-widest flex items-center gap-2 mb-6">
+                  <GraduationCap size={14} className="text-accent" />
+                  Education
+                </h3>
 
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-muted-foreground">CGPA</span>
-                <span className="text-sm font-bold text-foreground">7.99 / 10</span>
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-lg icon-btn flex-shrink-0 text-lg flex items-center justify-center bg-background/50 backdrop-blur-sm border border-border/50">
+                    🎓
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="text-sm font-bold text-foreground leading-snug">
+                      B.Tech — Information Technology
+                    </h4>
+                    <p className="text-xs font-semibold text-accent/90 mt-1">
+                      NIT Jalandhar
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-0.5 font-mono">
+                      2023 – Present
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid-divider-h my-4 opacity-50" />
+
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-muted-foreground">CGPA</span>
+                  <span className="text-sm font-bold text-foreground">7.99 / 10</span>
+                </div>
               </div>
-            </div>
+            </TiltCard>
           </motion.div>
 
           {/* Achievements */}

@@ -4,6 +4,7 @@ import ProjectsSection from "@/components/ProjectsSection";
 import ServicesSection from "@/components/ServicesSection";
 import SkillsSection from "@/components/SkillsSection";
 import ExperienceSection from "@/components/ExperienceSection";
+import BlogsSection from "@/components/BlogsSection";
 import ContactSection from "@/components/ContactSection";
 import FooterSection from "@/components/FooterSection";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -65,6 +66,11 @@ const Index = () => {
           {/* ── EXPERIENCE ── */}
           <div className="grid-section section-glow-amber">
             <ExperienceSection />
+          </div>
+
+          {/* ── BLOGS ── */}
+          <div className="grid-section section-glow-blue">
+            <BlogsSection />
           </div>
 
           {/* ── CONTACT ── */}

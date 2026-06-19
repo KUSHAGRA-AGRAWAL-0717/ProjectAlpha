@@ -3,6 +3,7 @@ import { MessageSquare, LayoutTemplate, LineChart, Workflow, LayoutDashboard, Sh
 
 import BusinessAnalysisVideo from "./Business Analysis.mp4";
 import Coding1Video from "./Coding (1).mp4";
+import TiltCard from "./ui/TiltCard";
 
 const FEATURED_SERVICES = [
   {
@@ -59,42 +60,44 @@ export default function ServicesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ delay: index * 0.1, duration: 0.5 }}
-            className="grid-cell flex flex-col h-full group"
+            className="grid-cell p-0 group"
           >
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-lg icon-btn flex items-center justify-center shrink-0">
-                <service.icon size={20} className="text-accent" />
+            <TiltCard intensity={8} className="flex flex-col h-full w-full p-5 sm:p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-lg icon-btn flex items-center justify-center shrink-0">
+                  <service.icon size={20} className="text-accent" />
+                </div>
+                <h3 className="text-lg font-bold text-foreground tracking-tight group-hover:text-accent transition-colors duration-200">
+                  {service.title}
+                </h3>
               </div>
-              <h3 className="text-lg font-bold text-foreground tracking-tight group-hover:text-accent transition-colors duration-200">
-                {service.title}
-              </h3>
-            </div>
 
-            {service.video && (
-              <div className="relative w-full max-w-[260px] mx-auto aspect-video rounded-xl overflow-hidden mb-5 border border-border/50 shadow-sm bg-white">
-                <video 
-                  autoPlay 
-                  muted 
-                  loop 
-                  playsInline 
-                  className="w-full h-full object-cover"
-                >
-                  <source src={service.video} type="video/mp4" />
-                </video>
+              {service.video && (
+                <div className="relative w-full max-w-[260px] mx-auto aspect-video rounded-xl overflow-hidden mb-5 border border-border/50 shadow-sm bg-white">
+                  <video 
+                    autoPlay 
+                    muted 
+                    loop 
+                    playsInline 
+                    className="w-full h-full object-cover"
+                  >
+                    <source src={service.video} type="video/mp4" />
+                  </video>
+                </div>
+              )}
+
+              <p className="text-sm text-muted-foreground leading-relaxed mb-5 flex-1">
+                {service.description}
+              </p>
+
+              <div className="grid-divider-h mb-4" />
+
+              <div className="flex flex-wrap gap-2">
+                {service.highlights.map((h) => (
+                  <span key={h} className="skill-chip text-[11px]">{h}</span>
+                ))}
               </div>
-            )}
-
-            <p className="text-sm text-muted-foreground leading-relaxed mb-5">
-              {service.description}
-            </p>
-
-            <div className="grid-divider-h mb-4" />
-
-            <div className="flex flex-wrap gap-2">
-              {service.highlights.map((h) => (
-                <span key={h} className="skill-chip text-[11px]">{h}</span>
-              ))}
-            </div>
+            </TiltCard>
           </motion.div>
         ))}
       </div>

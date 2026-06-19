@@ -4,6 +4,7 @@ import { ChevronRight } from "lucide-react";
 import { PROJECTS, CATEGORIES } from "@/data/projects";
 import ProjectCard from "./ProjectCard";
 import Coding1Video from "./Coding (1).mp4";
+import TiltCard from "./ui/TiltCard";
 
 /**
  * PROJECTS SECTION — Featured Hero + Grid
@@ -43,13 +44,15 @@ export default function ProjectsSection() {
         </div>
         
         {/* High-quality Header Video Banner */}
-        <div className="hidden md:block w-48 h-24 rounded-xl overflow-hidden border-2 border-border/50 shadow-md bg-white flex-shrink-0 relative">
-           <video autoPlay muted loop playsInline className="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-300">
-             <source src={Coding1Video} type="video/mp4" />
-           </video>
-           {/* Subtle gloss overlay to make it look premium */}
-           <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none" />
-        </div>
+        <TiltCard intensity={10} className="hidden sm:block w-48 h-24 rounded-xl flex-shrink-0 relative">
+          <div className="w-full h-full rounded-xl overflow-hidden border-2 border-border/50 shadow-md bg-white">
+            <video autoPlay muted loop playsInline className="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-300">
+              <source src={Coding1Video} type="video/mp4" />
+            </video>
+            {/* Subtle gloss overlay to make it look premium */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none" />
+          </div>
+        </TiltCard>
 
         
         {/* Filter tabs — clean, Linear-style */}

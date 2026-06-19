@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Github, Linkedin, Code, Mail, ArrowRight } from "lucide-react";
 import CodingVideo from "./Coding.mp4";
+import TiltCard from "./ui/TiltCard";
 
 const SOCIALS = [
   { icon: Github, href: "https://github.com/KUSHAGRA-AGRAWAL-0717", label: "GitHub" },
@@ -197,7 +198,8 @@ export default function HeroSection() {
         <div className="grid-cell-flush hidden lg:flex items-center justify-center relative overflow-hidden"
           style={{ background: "hsl(var(--surface-0))" }}
         >
-            <div className="relative w-full h-full max-h-[280px] max-w-[280px] rounded-2xl overflow-hidden shadow-xl ring-1 ring-border/50 bg-white">
+          <TiltCard className="w-full max-w-[320px] max-h-[320px] p-4 flex items-center justify-center">
+            <div className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-2xl ring-1 ring-border/50 bg-white">
               <video
                 autoPlay
                 muted
@@ -216,6 +218,7 @@ export default function HeroSection() {
                 </div>
               </div>
             </div>
+          </TiltCard>
         </div>
       </div>
 

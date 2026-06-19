@@ -688,4 +688,13 @@
     pointer-events: none;
     z-index: 0;
   }
+
+  /* ── 3D Effects Utilities ── */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
 }
