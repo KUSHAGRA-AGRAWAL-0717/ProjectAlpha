@@ -59,11 +59,10 @@ const ACHIEVEMENTS = [
 ];
 
 /**
- * EXPERIENCE SECTION — Vertical Timeline + Sidebar
+ * EXPERIENCE SECTION — Modern Timeline (Enhanced)
  *
- * Left: Experience cards with proper vertical timeline
- * Right: Education + Achievements
- * Current/active role listed first.
+ * Left: Experience cards with gradient timeline line, animated dots, accent left border
+ * Right: Education + Achievements with enhanced cards
  */
 export default function ExperienceSection() {
   return (
@@ -71,10 +70,11 @@ export default function ExperienceSection() {
       {/* Header bar */}
       <div className="grid-header-bar">
         <div>
-          <h2 className="text-[1.9rem] md:text-[2.4rem] font-extrabold text-foreground mb-2 tracking-tight">
-            Work <span className="gradient-text">Experience</span>
+          <span className="section-eyebrow">Career Journey</span>
+          <h2 className="text-[1.9rem] md:text-[2.4rem] font-extrabold text-foreground mb-2 tracking-tight section-title-underline">
+            Work <span className="gradient-text-animated">Experience</span>
           </h2>
-          <p className="text-muted-foreground/80 max-w-lg text-sm">
+          <p className="text-muted-foreground/80 max-w-lg text-sm mt-3">
             Professional journey building impactful solutions for businesses and startups.
           </p>
         </div>
@@ -83,12 +83,11 @@ export default function ExperienceSection() {
       {/* Main grid: Experience (3/5) | Sidebar (2/5) */}
       <div className="grid-section-inner grid-cols-1 lg:grid-cols-[3fr_2fr]">
 
-        {/* ── LEFT: Experience cards with vertical timeline ── */}
+        {/* ── LEFT: Experience cards with gradient timeline ── */}
         <div className="flex flex-col relative">
-          {/* Timeline line */}
+          {/* Gradient timeline line */}
           <div 
-            className="absolute left-[1.75rem] top-6 bottom-6 w-px hidden sm:block"
-            style={{ background: "var(--grid-border-color)" }}
+            className="absolute left-[1.75rem] top-6 bottom-6 w-px hidden sm:block timeline-gradient-line"
           />
           
           {EXPERIENCE.map((exp, i) => (
@@ -98,16 +97,19 @@ export default function ExperienceSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: i * 0.1, duration: 0.5 }}
-              className="grid-cell group"
-              style={{ borderBottom: i < EXPERIENCE.length - 1 ? "1px solid var(--grid-border-color)" : "none" }}
+              className="grid-cell-enhanced group"
+              style={{
+                borderBottom: i < EXPERIENCE.length - 1 ? "1px solid var(--grid-border-color)" : "none",
+                borderLeft: exp.current ? "2px solid hsl(32, 80%, 55%)" : undefined,
+              }}
             >
-              {/* Timeline dot */}
+              {/* Enhanced timeline dot with glow */}
               <div 
-                className="absolute left-[1.25rem] w-2.5 h-2.5 rounded-full hidden sm:block"
+                className={`absolute left-[1.25rem] w-2.5 h-2.5 rounded-full hidden sm:block ${exp.current ? "glow-dot" : ""}`}
                 style={{ 
                   background: exp.current ? "hsl(32, 80%, 55%)" : "hsl(var(--border))",
                   border: "2px solid hsl(var(--card))",
-                  boxShadow: exp.current ? "0 0 6px hsla(32, 80%, 50%, 0.3)" : "none",
+                  boxShadow: exp.current ? "0 0 8px hsla(32, 80%, 50%, 0.4)" : "none",
                   top: "1.5rem",
                 }}
               />
@@ -125,7 +127,9 @@ export default function ExperienceSection() {
                   </div>
                   <div className="flex flex-wrap gap-2 flex-shrink-0">
                     {exp.current && (
-                      <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 flex items-center gap-1.5">
+                      <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 flex items-center gap-1.5"
+                        style={{ boxShadow: "0 0 12px -4px hsla(150, 60%, 50%, 0.3)" }}
+                      >
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse-slow" />
                         Active
                       </span>
@@ -149,13 +153,29 @@ export default function ExperienceSection() {
                   {exp.description}
                 </p>
 
-                {/* Bullets */}
-                <ul className="space-y-2 mb-4">
+                {/* Bullets with staggered animation */}
+                <ul className="space-y-2 mb-4 list-none">
                   {exp.bullets.map((b, bi) => (
-                    <li key={bi} className="flex items-start gap-2.5 text-sm text-muted-foreground">
-                      <span className="text-accent/70 mt-1 text-xs flex-shrink-0">▸</span>
+                    <motion.li
+                      key={bi}
+                      initial={{ opacity: 0, x: -8 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.1 + bi * 0.05, duration: 0.3 }}
+                      className="flex items-start gap-2.5 text-sm text-muted-foreground list-none"
+                    >
+                      <span
+                        className="mt-1.5 flex-shrink-0"
+                        style={{
+                          width: "5px",
+                          height: "5px",
+                          borderRadius: "50%",
+                          background: "linear-gradient(135deg, hsl(32, 80%, 55%), hsl(32, 80%, 42%))",
+                          boxShadow: "0 0 6px hsla(32, 80%, 50%, 0.25)",
+                        }}
+                      />
                       {b}
-                    </li>
+                    </motion.li>
                   ))}
                 </ul>
 
@@ -164,7 +184,7 @@ export default function ExperienceSection() {
                 {/* Tags */}
                 <div className="flex flex-wrap gap-1.5">
                   {exp.tags.map((tag) => (
-                    <span key={tag} className="skill-chip text-[11px]">
+                    <span key={tag} className="skill-chip text-[11px] tag-float">
                       {tag}
                     </span>
                   ))}
@@ -200,7 +220,11 @@ export default function ExperienceSection() {
                 </h3>
 
                 <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-lg icon-btn flex-shrink-0 text-lg flex items-center justify-center bg-background/50 backdrop-blur-sm border border-border/50">
+                  <div className="w-10 h-10 rounded-lg flex-shrink-0 text-lg flex items-center justify-center bg-background/50 backdrop-blur-sm border border-border/50"
+                    style={{
+                      background: "linear-gradient(135deg, hsla(32, 80%, 55%, 0.1), hsla(32, 80%, 55%, 0.03))",
+                    }}
+                  >
                     🎓
                   </div>
                   <div className="flex-1 min-w-0">
@@ -220,7 +244,7 @@ export default function ExperienceSection() {
 
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-muted-foreground">CGPA</span>
-                  <span className="text-sm font-bold text-foreground">7.99 / 10</span>
+                  <span className="text-sm font-bold text-foreground stat-value-glow" style={{ color: "hsl(32, 80%, 55%)" }}>7.99 / 10</span>
                 </div>
               </div>
             </TiltCard>
@@ -232,7 +256,7 @@ export default function ExperienceSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="grid-cell"
+            className="grid-cell-enhanced"
             style={{ borderBottom: "1px solid var(--grid-border-color)" }}
           >
             <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-widest mb-4 flex items-center gap-2">
@@ -243,15 +267,15 @@ export default function ExperienceSection() {
               {ACHIEVEMENTS.map((a, i) => (
                 <motion.div
                   key={a.title}
-                  initial={{ opacity: 0, y: 8 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, x: -8 }}
+                  whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.15 + i * 0.06 }}
-                  className="flex items-start gap-3 group"
+                  className="flex items-start gap-3 group/item"
                 >
                   <span className="text-xl flex-shrink-0 mt-0.5">{a.icon}</span>
                   <div>
-                    <h4 className="text-sm font-bold text-foreground group-hover:text-accent transition-colors duration-200">
+                    <h4 className="text-sm font-bold text-foreground group-hover/item:text-accent transition-colors duration-200">
                       {a.title}
                     </h4>
                     <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">
@@ -269,7 +293,7 @@ export default function ExperienceSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            className="grid-cell flex-1"
+            className="grid-cell-enhanced flex-1"
           >
             <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-widest mb-4 flex items-center gap-2">
               <Users size={14} className="text-accent" />
@@ -277,15 +301,15 @@ export default function ExperienceSection() {
             </h3>
             <div className="space-y-4">
               <motion.div
-                initial={{ opacity: 0, y: 8 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: -8 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.15 }}
-                className="flex items-start gap-3 group"
+                className="flex items-start gap-3 group/item"
               >
                 <span className="text-xl flex-shrink-0 mt-0.5">🚀</span>
                 <div>
-                  <h4 className="text-sm font-bold text-foreground group-hover:text-accent transition-colors duration-200">
+                  <h4 className="text-sm font-bold text-foreground group-hover/item:text-accent transition-colors duration-200">
                     Club Cybernauts
                   </h4>
                   <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">
@@ -295,15 +319,15 @@ export default function ExperienceSection() {
               </motion.div>
 
               <motion.div
-                initial={{ opacity: 0, y: 8 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: -8 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
-                className="flex items-start gap-3 group"
+                className="flex items-start gap-3 group/item"
               >
                 <span className="text-xl flex-shrink-0 mt-0.5">💡</span>
                 <div>
-                  <h4 className="text-sm font-bold text-foreground group-hover:text-accent transition-colors duration-200">
+                  <h4 className="text-sm font-bold text-foreground group-hover/item:text-accent transition-colors duration-200">
                     Google Developer Student Clubs (GDGC)
                   </h4>
                   <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">
@@ -311,6 +335,68 @@ export default function ExperienceSection() {
                   </p>
                 </div>
               </motion.div>
+            </div>
+          </motion.div>
+
+          {/* Hobbies & Interests */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ delay: 0.35, duration: 0.5 }}
+            className="grid-cell-enhanced"
+          >
+            <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-widest mb-4 flex items-center gap-2">
+              🎨 Hobbies & Interests
+            </h3>
+            <div className="space-y-4">
+              <div className="flex items-start gap-3 group/item">
+                <span className="text-xl flex-shrink-0 mt-0.5">⚽</span>
+                <div>
+                  <h4 className="text-sm font-bold text-foreground group-hover/item:text-accent transition-colors duration-200">
+                    Football
+                  </h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">
+                    Active play & sports strategy
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 group/item">
+                <span className="text-xl flex-shrink-0 mt-0.5">✍️</span>
+                <div>
+                  <h4 className="text-sm font-bold text-foreground group-hover/item:text-accent transition-colors duration-200">
+                    Writing
+                  </h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">
+                    Technical blogging & sharing developer insights
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 group/item">
+                <span className="text-xl flex-shrink-0 mt-0.5">🎬</span>
+                <div>
+                  <h4 className="text-sm font-bold text-foreground group-hover/item:text-accent transition-colors duration-200">
+                    Movies & Web Series
+                  </h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">
+                    Sci-fi, thrillers & cinematic storytelling
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 group/item">
+                <span className="text-xl flex-shrink-0 mt-0.5">🚲</span>
+                <div>
+                  <h4 className="text-sm font-bold text-foreground group-hover/item:text-accent transition-colors duration-200">
+                    Cycling
+                  </h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">
+                    Outdoor fitness & exploring scenic routes
+                  </p>
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>

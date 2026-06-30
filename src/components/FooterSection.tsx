@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Github, Linkedin, Code, Mail, ArrowUp } from "lucide-react";
+import { Github, Linkedin, Code, Mail, ArrowUp, Heart } from "lucide-react";
 
 const NAV_LINKS = [
   { label: "Projects", href: "#projects" },
@@ -17,19 +17,18 @@ const SOCIALS = [
 ];
 
 /**
- * FOOTER — 3-Column Grid
+ * FOOTER — Enhanced 3-Column Grid
  *
- * ┌──────────┬──────────┬──────────┐
- * │ Brand    │ Links    │ Contact  │
- * ├──────────┴──────────┴──────────┤
- * │ © 2026 · Built with React     │
- * └────────────────────────────────┘
+ * Gradient top bar, enhanced social hover, better hierarchy.
  */
 export default function FooterSection() {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
     <footer>
+      {/* Gradient top bar */}
+      <div className="footer-gradient-bar" />
+
       {/* 3-column grid */}
       <div className="grid-section-inner grid-cols-1 md:grid-cols-3">
         {/* Brand */}
@@ -41,7 +40,7 @@ export default function FooterSection() {
             transition={{ duration: 0.5 }}
             className="font-extrabold text-xl tracking-tight text-foreground inline-block px-2 py-1 rounded-md"
           >
-            KA<span className="text-accent">.</span>
+            KA<span className="gradient-text-animated">.</span>
           </motion.span>
           <p className="text-sm text-muted-foreground mt-2.5 leading-relaxed max-w-xs">
             Building intelligent SaaS systems and AI-powered applications.
@@ -54,7 +53,8 @@ export default function FooterSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={s.label}
-                whileHover={{ y: -2 }}
+                whileHover={{ y: -3, scale: 1.08 }}
+                whileTap={{ scale: 0.95 }}
                 className="icon-btn w-9 h-9 rounded-lg"
               >
                 <s.icon size={15} />
@@ -73,7 +73,7 @@ export default function FooterSection() {
               <a
                 key={l.href}
                 href={l.href}
-                className="block text-sm text-muted-foreground hover:text-foreground transition-colors link-underline w-fit"
+                className="block text-sm text-muted-foreground hover:text-foreground hover:translate-x-1 transition-all duration-200 link-underline w-fit"
               >
                 {l.label}
               </a>
@@ -106,20 +106,23 @@ export default function FooterSection() {
 
       {/* Bottom row */}
       <div className="grid-cell flex flex-col sm:flex-row justify-between items-center gap-4 py-4">
-        <p className="text-xs text-muted-foreground">
-          © 2026 Kushagra Agrawal. All rights reserved.
+        <p className="text-xs text-muted-foreground flex items-center gap-1.5">
+          © 2026 Kushagra Agrawal. Built with
+          <Heart size={11} className="text-accent" style={{ fill: "currentColor" }} />
         </p>
         <div className="flex items-center gap-4">
           <p className="text-xs text-muted-foreground">
-            Built with React & TypeScript
+            React & TypeScript
           </p>
-          <button
+          <motion.button
             onClick={scrollToTop}
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.9 }}
             className="icon-btn w-8 h-8 rounded-lg"
             aria-label="Scroll to top"
           >
             <ArrowUp size={14} />
-          </button>
+          </motion.button>
         </div>
       </div>
     </footer>

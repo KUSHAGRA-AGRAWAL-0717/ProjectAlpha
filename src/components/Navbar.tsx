@@ -149,15 +149,16 @@ export default function Navbar() {
                 >
                   {isActive && (
                     <span
+                      className="nav-active-line"
                       style={{
                         position: "absolute",
-                        top: "2px",
+                        bottom: "2px",
                         left: "8px",
                         right: "8px",
                         height: "2px",
                         borderRadius: "1px",
                         background:
-                          "linear-gradient(90deg, transparent, hsl(32, 80%, 55%), transparent)",
+                          "linear-gradient(90deg, hsl(32, 80%, 55%), hsla(32, 80%, 55%, 0.2))",
                       }}
                     />
                   )}
@@ -237,7 +238,8 @@ export default function Navbar() {
                         ? {
                             color: "hsl(32, 80%, 55%)",
                             background: "hsl(var(--surface-0))",
-                            borderLeft: "2px solid hsl(32, 80%, 55%)",
+                            borderLeft: "3px solid hsl(32, 80%, 55%)",
+                            boxShadow: "inset 4px 0 8px -4px hsla(32, 80%, 55%, 0.15)",
                           }
                         : { color: "hsl(var(--muted-foreground))" }),
                     }}

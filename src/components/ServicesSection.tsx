@@ -30,11 +30,11 @@ const OTHER_SERVICES = [
 ];
 
 /**
- * SERVICES SECTION — Editorial Layout
+ * SERVICES SECTION — Editorial Layout (Enhanced)
  *
- * 2 featured services (large cards, top row)
- * 4 compact services (bottom row, 2×2 on desktop)
- * Breaks the "6 identical cards" AI template pattern.
+ * 2 featured services (large cards with gradient borders, top row)
+ * 4 compact services (bottom row with animated bottom border)
+ * Service numbering for editorial feel.
  */
 export default function ServicesSection() {
   return (
@@ -42,16 +42,17 @@ export default function ServicesSection() {
       {/* Header */}
       <div className="grid-header-bar">
         <div>
-          <h2 className="text-[1.9rem] md:text-[2.4rem] font-extrabold text-foreground mb-2 tracking-tight">
-            What I <span className="gradient-text">Build</span>
+          <span className="section-eyebrow">What I Offer</span>
+          <h2 className="text-[1.9rem] md:text-[2.4rem] font-extrabold text-foreground mb-2 tracking-tight section-title-underline">
+            What I <span className="gradient-text-animated">Build</span>
           </h2>
-          <p className="text-muted-foreground/80 max-w-lg text-sm">
+          <p className="text-muted-foreground/80 max-w-lg text-sm mt-3">
             I help businesses grow with AI, websites, and automation — from concept to production.
           </p>
         </div>
       </div>
 
-      {/* Featured services — 2 large cards */}
+      {/* Featured services — 2 large cards with gradient borders */}
       <div className="grid-section-inner grid-cols-1 md:grid-cols-2">
         {FEATURED_SERVICES.map((service, index) => (
           <motion.div
@@ -60,11 +61,21 @@ export default function ServicesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ delay: index * 0.1, duration: 0.5 }}
-            className="grid-cell p-0 group"
+            className="grid-cell-enhanced p-0 group relative"
           >
+            {/* Card index number */}
+            <span className="card-index">0{index + 1}</span>
+
             <TiltCard intensity={8} className="flex flex-col h-full w-full p-5 sm:p-6">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-lg icon-btn flex items-center justify-center shrink-0">
+                <div
+                  className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
+                  style={{
+                    background: "linear-gradient(135deg, hsla(32, 80%, 55%, 0.15), hsla(32, 80%, 55%, 0.05))",
+                    border: "1px solid hsla(32, 80%, 55%, 0.2)",
+                    boxShadow: "0 0 12px -4px hsla(32, 80%, 55%, 0.2)",
+                  }}
+                >
                   <service.icon size={20} className="text-accent" />
                 </div>
                 <h3 className="text-lg font-bold text-foreground tracking-tight group-hover:text-accent transition-colors duration-200">
@@ -94,7 +105,7 @@ export default function ServicesSection() {
 
               <div className="flex flex-wrap gap-2">
                 {service.highlights.map((h) => (
-                  <span key={h} className="skill-chip text-[11px]">{h}</span>
+                  <span key={h} className="skill-chip text-[11px] tag-float">{h}</span>
                 ))}
               </div>
             </TiltCard>
@@ -102,7 +113,7 @@ export default function ServicesSection() {
         ))}
       </div>
 
-      {/* Compact services — 4 items in 2×2 */}
+      {/* Compact services — 4 items with enhanced hover */}
       <div className="grid-section-inner grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {OTHER_SERVICES.map((service, index) => (
           <motion.div
@@ -111,10 +122,19 @@ export default function ServicesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ delay: index * 0.08, duration: 0.4 }}
-            className="grid-cell group"
+            className="grid-cell-enhanced group"
           >
+            <span className="card-index">0{index + 3}</span>
             <div className="flex items-center gap-2.5 mb-3">
-              <service.icon size={16} className="text-accent/70 shrink-0" />
+              <div
+                className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
+                style={{
+                  background: "linear-gradient(135deg, hsla(32, 80%, 55%, 0.1), hsla(32, 80%, 55%, 0.03))",
+                  border: "1px solid hsla(32, 80%, 55%, 0.15)",
+                }}
+              >
+                <service.icon size={15} className="text-accent/70" />
+              </div>
               <h3 className="font-semibold text-foreground text-sm tracking-tight group-hover:text-accent transition-colors duration-200">
                 {service.title}
               </h3>
@@ -130,7 +150,7 @@ export default function ServicesSection() {
       <div className="grid-cell flex justify-center py-6">
         <a
           href="#contact"
-          className="skeuo-btn skeuo-btn-primary px-6 py-3 rounded-lg text-sm group flex items-center gap-2"
+          className="skeuo-btn skeuo-btn-primary btn-shimmer px-6 py-3 rounded-lg text-sm group flex items-center gap-2"
         >
           Let's Discuss Your Project
           <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />

@@ -25,6 +25,12 @@ const STATS = [
   { value: "NIT", label: "Jalandhar" },
 ];
 
+const BIO_POINTS = [
+  "I build AI-powered SaaS products that automate real business workflows",
+  "From OCR invoice processing to SEO content platforms — full-stack delivery",
+  "I ship production-ready systems with modern web tech, built to scale",
+];
+
 function useTypewriter(words: string[], typingSpeed = 80, pauseDuration = 1800) {
   const [display, setDisplay] = useState("");
   const [wordIdx, setWordIdx] = useState(0);
@@ -59,10 +65,10 @@ function useTypewriter(words: string[], typingSpeed = 80, pauseDuration = 1800) 
 }
 
 /**
- * HERO SECTION — Clean Split Layout
+ * HERO SECTION — Clean Split Layout (Enhanced)
  *
- * Left: Name, role, bio, CTAs, social links, stats
- * Right: Abstract geometric composition (CSS-only, no stock video)
+ * Left: Name (modern weight), role, bio bullets, CTAs, social links, stats
+ * Right: Abstract geometric composition with masked video
  */
 export default function HeroSection() {
   const role = useTypewriter(ROLES);
@@ -99,15 +105,29 @@ export default function HeroSection() {
               </span>
             </motion.div>
 
-            {/* Name */}
+            {/* Section eyebrow */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.05, duration: 0.4 }}
+            >
+              <span className="section-eyebrow">Creative Full-Stack & AI Engineer</span>
+            </motion.div>
+
+            {/* Name — reduced size, modern weight mixing */}
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1, duration: 0.5 }}
-              className="text-[2.4rem] sm:text-5xl md:text-[3.25rem] font-black tracking-tight mb-4 leading-[1.1]"
+              className="mb-4 leading-[1.1]"
             >
-              Hi, I'm{" "}
-              <span className="gradient-text">
+              <span
+                className="block text-lg sm:text-xl font-normal tracking-tight mb-1"
+                style={{ color: "hsl(var(--muted-foreground))" }}
+              >
+                Hi, I'm
+              </span>
+              <span className="block text-[1.6rem] sm:text-[2rem] md:text-[2.2rem] font-extrabold tracking-tight gradient-text-animated">
                 Kushagra Agrawal
               </span>
             </motion.h1>
@@ -117,7 +137,7 @@ export default function HeroSection() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.5 }}
-              className="mb-5"
+              className="mb-6"
             >
               <div
                 className="inline-flex items-center px-5 py-2"
@@ -138,18 +158,27 @@ export default function HeroSection() {
               </div>
             </motion.div>
 
-            {/* Bio — rewritten to sound human, not generated */}
+            {/* Bio — bullet points */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.25, duration: 0.5 }}
               className="mb-8"
             >
-              <p className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-lg">
-                I build AI-powered SaaS products that automate real business workflows — 
-                from OCR invoice processing to SEO content platforms. I ship full-stack 
-                systems with modern web tech, and I care about making things that actually work at scale.
-              </p>
+              <ul className="bio-bullet-list max-w-lg">
+                {BIO_POINTS.map((point, i) => (
+                  <motion.li
+                    key={i}
+                    initial={{ opacity: 0, x: -12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.3 + i * 0.08, duration: 0.4 }}
+                    className="bio-bullet-item"
+                  >
+                    <span className="bio-bullet-marker" />
+                    <span>{point}</span>
+                  </motion.li>
+                ))}
+              </ul>
             </motion.div>
 
             {/* CTA buttons */}
@@ -159,7 +188,7 @@ export default function HeroSection() {
               transition={{ delay: 0.3, duration: 0.5 }}
               className="flex flex-wrap gap-3 mb-6"
             >
-              <a href="#projects" className="skeuo-btn skeuo-btn-primary px-7 py-3 text-sm font-semibold flex items-center gap-2">
+              <a href="#projects" className="skeuo-btn skeuo-btn-primary btn-shimmer px-7 py-3 text-sm font-semibold flex items-center gap-2">
                 View Projects
                 <ArrowRight size={16} />
               </a>
@@ -230,16 +259,16 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 + i * 0.05, duration: 0.5 }}
-            className="grid-stat-cell"
+            className="grid-stat-cell group cursor-default"
           >
             <span
-              className="text-lg sm:text-xl font-bold"
+              className="text-lg sm:text-xl font-bold stat-value-glow"
               style={{ color: "hsl(32, 80%, 55%)" }}
             >
               {stat.value}
             </span>
             <span
-              className="text-[10px] sm:text-[11px] font-semibold tracking-wider uppercase mt-1"
+              className="text-[10px] sm:text-[11px] font-semibold tracking-wider uppercase mt-1 group-hover:text-foreground transition-colors duration-200"
               style={{ color: "hsl(var(--muted-foreground))", letterSpacing: "0.06em" }}
             >
               {stat.label}

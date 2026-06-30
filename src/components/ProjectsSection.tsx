@@ -7,10 +7,9 @@ import Coding1Video from "./Coding (1).mp4";
 import TiltCard from "./ui/TiltCard";
 
 /**
- * PROJECTS SECTION — Featured Hero + Grid
+ * PROJECTS SECTION — Featured Hero + Grid (Enhanced)
  *
- * Top: Section header with filter tabs (Linear-style, text-only)
- * Below: 2-column project grid
+ * Section eyebrow, animated gradient title, enhanced filter tabs, gradient border video banner.
  */
 export default function ProjectsSection() {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -35,10 +34,11 @@ export default function ProjectsSection() {
       {/* Header bar */}
       <div className="grid-header-bar flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="flex-1">
-          <h2 className="text-[1.9rem] md:text-[2.4rem] font-extrabold text-foreground mb-2 tracking-tight">
-            Featured <span className="gradient-text">Projects</span>
+          <span className="section-eyebrow">My Work</span>
+          <h2 className="text-[1.9rem] md:text-[2.4rem] font-extrabold text-foreground mb-2 tracking-tight section-title-underline">
+            Featured <span className="gradient-text-animated">Projects</span>
           </h2>
-          <p className="text-muted-foreground/80 max-w-lg text-sm">
+          <p className="text-muted-foreground/80 max-w-lg text-sm mt-3">
             Real-world applications built with modern technologies, solving genuine problems.
           </p>
         </div>
@@ -55,7 +55,7 @@ export default function ProjectsSection() {
         </TiltCard>
 
         
-        {/* Filter tabs — clean, Linear-style */}
+        {/* Filter tabs — enhanced with animated underline */}
         <div className="flex flex-wrap gap-1 mt-2">
           {CATEGORIES.map((cat) => {
             const isActive = activeCategory === cat;
@@ -63,7 +63,7 @@ export default function ProjectsSection() {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className="px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-150 flex items-center gap-1.5"
+                className="px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 flex items-center gap-1.5 relative"
                 style={isActive ? {
                   background: "hsl(var(--surface-0))",
                   color: "hsl(32, 80%, 55%)",
@@ -78,17 +78,23 @@ export default function ProjectsSection() {
                 {cat}
                 <span
                   className="text-[10px] font-mono"
-                  style={{ opacity: 0.6 }}
+                  style={{ opacity: isActive ? 0.8 : 0.5 }}
                 >
                   {getCategoryCount(cat)}
                 </span>
+                {isActive && (
+                  <span
+                    className="absolute bottom-0 left-2 right-2 h-[2px] rounded-full nav-active-line"
+                    style={{ background: "linear-gradient(90deg, hsl(32, 80%, 55%), transparent)" }}
+                  />
+                )}
               </button>
             );
           })}
         </div>
       </div>
 
-      {/* Project grid: 3 columns for denser layout */}
+      {/* Project grid: 3 columns */}
       <div className="grid-section-inner grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
         <AnimatePresence mode="popLayout">
           {displayedProjects.map((project, idx) => (

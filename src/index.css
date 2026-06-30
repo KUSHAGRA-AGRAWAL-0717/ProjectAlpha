@@ -697,4 +697,322 @@
   .preserve-3d {
     transform-style: preserve-3d;
   }
+
+  /* ═══════════════════════════════════════════════════════════════
+     PREMIUM ENHANCEMENT UTILITIES
+     ═══════════════════════════════════════════════════════════════ */
+
+  /* ── Bio Bullet List ── */
+  .bio-bullet-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .bio-bullet-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: hsl(var(--muted-foreground));
+  }
+
+  .bio-bullet-marker {
+    flex-shrink: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-top: 0.5rem;
+    background: linear-gradient(135deg, hsl(32, 80%, 55%), hsl(32, 80%, 42%));
+    box-shadow: 0 0 8px hsla(32, 80%, 50%, 0.3);
+  }
+
+  /* ── Section Eyebrow (small label above titles) ── */
+  .section-eyebrow {
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: hsl(32, 70%, 60%);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-eyebrow::before {
+    content: "";
+    width: 20px;
+    height: 2px;
+    background: linear-gradient(90deg, hsl(32, 80%, 55%), transparent);
+    border-radius: 1px;
+  }
+
+  /* ── Animated Gradient Text ── */
+  .gradient-text-animated {
+    background: linear-gradient(
+      135deg,
+      hsl(32, 85%, 58%) 0%,
+      hsl(28, 90%, 52%) 25%,
+      hsl(36, 80%, 60%) 50%,
+      hsl(32, 85%, 55%) 75%,
+      hsl(28, 90%, 50%) 100%
+    );
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradient-shift 4s ease-in-out infinite;
+  }
+
+  @keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  /* ── Glass Card ── */
+  .glass-card {
+    background: hsla(var(--card), 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid hsla(var(--border), 0.5);
+    border-radius: calc(var(--radius) * 1.5);
+    box-shadow:
+      0 4px 16px -4px hsla(var(--shadow-color), 0.2),
+      inset 0 1px 0 0 hsla(var(--highlight), 0.05);
+  }
+
+  /* ── Gradient Border Card ── */
+  .gradient-border-card {
+    position: relative;
+    border: 1px solid transparent;
+    border-radius: calc(var(--radius) * 1.5);
+    background: hsl(var(--card));
+    transition: all 0.3s ease;
+  }
+
+  .gradient-border-card::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      135deg,
+      hsla(32, 80%, 55%, 0) 0%,
+      hsla(32, 80%, 55%, 0) 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    transition: background 0.4s ease;
+  }
+
+  .gradient-border-card:hover::before {
+    background: linear-gradient(
+      135deg,
+      hsla(32, 80%, 55%, 0.6) 0%,
+      hsla(220, 60%, 55%, 0.3) 50%,
+      hsla(32, 80%, 55%, 0.6) 100%
+    );
+  }
+
+  /* ── Stat Glow ── */
+  .stat-value-glow {
+    text-shadow: 0 0 20px hsla(32, 80%, 55%, 0.3);
+    transition: text-shadow 0.3s ease;
+  }
+
+  .stat-value-glow:hover {
+    text-shadow: 0 0 30px hsla(32, 80%, 55%, 0.5);
+  }
+
+  /* ── Section Title Underline ── */
+  .section-title-underline {
+    position: relative;
+    display: inline-block;
+  }
+
+  .section-title-underline::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, hsl(32, 80%, 55%), hsla(32, 80%, 55%, 0.2));
+  }
+
+  /* ── Shimmer Button Animation ── */
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  .btn-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      hsla(40, 80%, 70%, 0.15) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  /* ── Timeline Gradient Line ── */
+  .timeline-gradient-line {
+    background: linear-gradient(
+      180deg,
+      hsl(32, 80%, 55%) 0%,
+      hsla(32, 80%, 55%, 0.3) 50%,
+      hsla(var(--border)) 100%
+    );
+  }
+
+  /* ── Enhanced Grid Cell Hover (for cards with gradient border reveal) ── */
+  .grid-cell-enhanced {
+    background: hsl(var(--card));
+    padding: 1.25rem;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    border: 1px solid var(--grid-border-color);
+    margin-top: -1px;
+    margin-left: -1px;
+  }
+
+  .grid-cell-enhanced::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, hsl(32, 80%, 55%), hsl(220, 60%, 55%));
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .grid-cell-enhanced:hover::after {
+    width: 100%;
+  }
+
+  .grid-cell-enhanced:hover {
+    box-shadow:
+      inset 0 0 0 1px var(--grid-hover-border),
+      0 0 24px -6px var(--grid-hover-glow);
+    z-index: 2;
+  }
+
+  /* ── Floating tag hover ── */
+  .tag-float {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .tag-float:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px -4px hsla(32, 80%, 50%, 0.2);
+  }
+
+  /* ── Card index number (for services) ── */
+  .card-index {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: hsla(var(--muted-foreground), 0.3);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── Glow dot (enhanced timeline dot) ── */
+  .glow-dot {
+    position: relative;
+  }
+
+  .glow-dot::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: hsla(32, 80%, 55%, 0.15);
+    animation: pulse-slow 2.8s ease-in-out infinite;
+  }
+
+  /* ── Input float label ── */
+  .input-enhanced {
+    background: hsl(var(--surface-0));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+    color: hsl(var(--foreground));
+    font-size: 14px;
+    box-shadow: inset 0 1px 3px -1px hsla(var(--shadow-color), 0.3);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .input-enhanced:focus {
+    border-color: hsl(32, 80%, 50%);
+    box-shadow:
+      inset 0 1px 3px -1px hsla(var(--shadow-color), 0.3),
+      0 0 0 3px hsla(32, 80%, 50%, 0.1),
+      0 0 16px -4px hsla(32, 80%, 50%, 0.15);
+  }
+
+  /* ── Footer gradient top bar ── */
+  .footer-gradient-bar {
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      hsl(32, 80%, 55%) 20%,
+      hsl(220, 60%, 55%) 50%,
+      hsl(32, 80%, 55%) 80%,
+      transparent 100%
+    );
+    opacity: 0.4;
+  }
+
+  /* ── Reading time badge ── */
+  .reading-time-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: hsl(var(--muted-foreground));
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    background: hsla(var(--surface-2), 0.8);
+    border: 1px solid hsl(var(--border));
+  }
+
+  /* ── Scroll indicator line for active nav ── */
+  @keyframes nav-underline-enter {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  .nav-active-line {
+    animation: nav-underline-enter 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    transform-origin: left;
+  }
 }

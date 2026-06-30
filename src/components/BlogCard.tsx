@@ -1,6 +1,6 @@
 import { forwardRef, type ForwardedRef } from "react";
 import { motion } from "framer-motion";
-import { ExternalLink, Calendar } from "lucide-react";
+import { ExternalLink, Calendar, Clock } from "lucide-react";
 import TiltCard from "./ui/TiltCard";
 
 export interface BlogPost {
@@ -10,13 +10,14 @@ export interface BlogPost {
   thumbnail: string;
   description: string;
   categories: string[];
+  guid?: string;
 }
 
 /**
- * BLOG CARD — Clean, Content-Focused
+ * BLOG CARD — Enhanced, Content-Focused
  *
- * Image → Title + Excerpt → Categories → Links
- * Inherits 100% of the ProjectCard design language.
+ * Image → Title + Excerpt + Reading Time → Categories → Links
+ * Inherits ProjectCard design language with reading time badge.
  */
 function BlogCardInner(
   { post, index }: { post: BlogPost; index: number },
@@ -32,6 +33,10 @@ function BlogCardInner(
   // Strip HTML tags from description for a clean excerpt
   const cleanExcerpt = post.description.replace(/<[^>]*>?/gm, "");
 
+  // Estimate reading time (avg 200 words per minute)
+  const wordCount = cleanExcerpt.split(/\s+/).length;
+  const readingTime = Math.max(1, Math.ceil(wordCount / 200));
+
   return (
     <motion.div
       ref={ref}
@@ -39,7 +44,7 @@ function BlogCardInner(
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ delay: index * 0.08, duration: 0.5 }}
-      className="grid-cell p-0 flex flex-col group"
+      className="grid-cell-enhanced p-0 flex flex-col group"
     >
       <TiltCard intensity={5} scaleOnHover={1.01} className="flex flex-col h-full w-full">
         {/* ── Image viewport ── */}
@@ -54,7 +59,7 @@ function BlogCardInner(
               <img
                 src={post.thumbnail}
                 alt={post.title}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.05]"
                 loading="lazy"
               />
             ) : (
@@ -65,19 +70,30 @@ function BlogCardInner(
               </div>
             )}
 
+            {/* Gradient overlay on hover */}
+            <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
             {/* Top badges */}
             <div className="absolute top-3 left-3 flex gap-2">
               <span className="px-2.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider border badge-webapp">
                 Article
               </span>
             </div>
-            <div className="absolute top-3 right-3 flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-mono text-muted-foreground"
-                 style={{
-                   background: "hsl(var(--surface-0))",
-                   border: "1px solid hsl(var(--border))",
-                 }}>
-              <Calendar size={10} className="text-accent/60" />
-              {formattedDate}
+            <div className="absolute top-3 right-3 flex items-center gap-2">
+              {/* Reading time */}
+              <span className="reading-time-badge">
+                <Clock size={9} />
+                {readingTime} min
+              </span>
+              {/* Date */}
+              <span className="flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-mono text-muted-foreground"
+                   style={{
+                     background: "hsl(var(--surface-0))",
+                     border: "1px solid hsl(var(--border))",
+                   }}>
+                <Calendar size={10} className="text-accent/60" />
+                {formattedDate}
+              </span>
             </div>
           </div>
         </div>
@@ -102,7 +118,7 @@ function BlogCardInner(
               post.categories.slice(0, 4).map((c) => (
                 <span
                   key={c}
-                  className="px-2.5 py-1 text-[11px] font-medium rounded-md uppercase"
+                  className="px-2.5 py-1 text-[11px] font-medium rounded-md uppercase tag-float"
                   style={{
                     background: "hsl(var(--surface-0))",
                     border: "1px solid hsl(var(--border))",

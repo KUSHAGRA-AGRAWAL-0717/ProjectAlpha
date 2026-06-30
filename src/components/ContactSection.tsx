@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { Send, Mail, Phone, MapPin, Github, Linkedin, Code } from "lucide-react";
+import { Send, Mail, Phone, MapPin, Github, Linkedin, Code, CheckCircle, XCircle } from "lucide-react";
 import emailjs from "@emailjs/browser";
 import SceneVideo from "./Scene.mp4";
 
@@ -18,7 +18,7 @@ const SOCIAL_LINKS = [
 ];
 
 /**
- * CONTACT SECTION — Clean Split: Info + Form
+ * CONTACT SECTION — Premium Form Design (Enhanced)
  */
 export default function ContactSection() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -64,10 +64,11 @@ export default function ContactSection() {
       {/* Header bar */}
       <div className="grid-header-bar">
         <div>
-          <h2 className="text-[1.9rem] md:text-[2.4rem] font-extrabold text-foreground mb-2 tracking-tight">
-            Let's Work <span className="gradient-text">Together</span>
+          <span className="section-eyebrow">Get In Touch</span>
+          <h2 className="text-[1.9rem] md:text-[2.4rem] font-extrabold text-foreground mb-2 tracking-tight section-title-underline">
+            Let's Work <span className="gradient-text-animated">Together</span>
           </h2>
-          <p className="text-muted-foreground/80 max-w-lg text-sm">
+          <p className="text-muted-foreground/80 max-w-lg text-sm mt-3">
             Have a project in mind? Let's discuss how I can help bring your ideas to life.
           </p>
         </div>
@@ -94,9 +95,19 @@ export default function ContactSection() {
 
           <div className="relative z-10 flex flex-col h-full">
             {/* Availability card */}
-            <div className="skeuo-panel rounded-lg p-4 mb-4 relative overflow-hidden bg-background/50 backdrop-blur-md border border-border/50">
+            <div
+              className="rounded-lg p-4 mb-4 relative overflow-hidden backdrop-blur-md"
+              style={{
+                background: "hsla(var(--card), 0.5)",
+                border: "1px solid hsla(var(--border), 0.5)",
+                boxShadow: "0 4px 16px -4px hsla(var(--shadow-color), 0.15), inset 0 1px 0 0 hsla(var(--highlight), 0.05)",
+              }}
+            >
               <div className="flex items-center gap-2 mb-1.5">
-                <span className="w-2 h-2 rounded-full animate-pulse-slow" style={{ background: "hsl(150, 60%, 50%)", boxShadow: "0 0 6px hsla(150, 60%, 50%, 0.3)" }} />
+                <span
+                  className="w-2 h-2 rounded-full animate-pulse-slow"
+                  style={{ background: "hsl(150, 60%, 50%)", boxShadow: "0 0 8px hsla(150, 60%, 50%, 0.4)" }}
+                />
                 <span className="text-sm font-bold text-foreground">Available for Work</span>
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed">
@@ -113,9 +124,16 @@ export default function ContactSection() {
 
             <div className="space-y-4 mb-4">
               {CONTACT_INFO.map((c) => (
-                <div key={c.label} className="flex items-center gap-3">
-                  <div className="icon-btn w-9 h-9 shrink-0 bg-background/50 backdrop-blur-sm">
-                    <c.icon size={15} />
+                <div key={c.label} className="flex items-center gap-3 group/item">
+                  <div
+                    className="w-9 h-9 shrink-0 flex items-center justify-center rounded-lg"
+                    style={{
+                      background: "linear-gradient(135deg, hsla(32, 80%, 55%, 0.1), hsla(32, 80%, 55%, 0.03))",
+                      border: "1px solid hsla(32, 80%, 55%, 0.15)",
+                      backdropFilter: "blur(8px)",
+                    }}
+                  >
+                    <c.icon size={15} className="text-accent/70 group-hover/item:text-accent transition-colors" />
                   </div>
                   <div>
                     <p className="text-[10px] text-muted-foreground uppercase tracking-wider">{c.label}</p>
@@ -148,7 +166,7 @@ export default function ContactSection() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  whileHover={{ y: -2 }}
+                  whileHover={{ y: -3, scale: 1.05 }}
                   className="icon-btn w-10 h-10 bg-background/50 backdrop-blur-sm"
                 >
                   <s.icon size={17} />
@@ -178,7 +196,7 @@ export default function ContactSection() {
                   id="user_name"
                   name="user_name"
                   required
-                  className="input-field input-focus-ripple"
+                  className="input-field input-enhanced input-focus-ripple w-full px-4 py-2.5 text-sm outline-none"
                   placeholder="John Doe"
                 />
               </div>
@@ -191,7 +209,7 @@ export default function ContactSection() {
                   id="user_email"
                   name="user_email"
                   required
-                  className="input-field input-focus-ripple"
+                  className="input-field input-enhanced input-focus-ripple w-full px-4 py-2.5 text-sm outline-none"
                   placeholder="john@example.com"
                 />
               </div>
@@ -206,7 +224,7 @@ export default function ContactSection() {
                 type="tel"
                 id="user_phone"
                 name="user_phone"
-                className="input-field input-focus-ripple"
+                className="input-field input-enhanced input-focus-ripple w-full px-4 py-2.5 text-sm outline-none"
                 placeholder="+1 (555) 000-0000"
               />
             </div>
@@ -221,7 +239,7 @@ export default function ContactSection() {
                 id="subject"
                 name="subject"
                 required
-                className="input-field input-focus-ripple"
+                className="input-field input-enhanced input-focus-ripple w-full px-4 py-2.5 text-sm outline-none"
                 placeholder="Project Inquiry"
               />
             </div>
@@ -236,7 +254,7 @@ export default function ContactSection() {
                 name="message"
                 required
                 rows={5}
-                className="input-field input-focus-ripple resize-none"
+                className="input-field input-enhanced input-focus-ripple resize-none w-full px-4 py-2.5 text-sm outline-none"
                 placeholder="Tell me about your project..."
               />
             </div>
@@ -245,22 +263,53 @@ export default function ContactSection() {
             <button
               type="submit"
               disabled={sending}
-              className="skeuo-btn skeuo-btn-primary w-full py-3 text-sm font-semibold flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="skeuo-btn skeuo-btn-primary btn-shimmer w-full py-3 text-sm font-semibold flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {sending ? "Sending..." : "Send Message"}
-              <Send size={15} />
+              {sending ? (
+                <>
+                  <span className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                  Sending...
+                </>
+              ) : (
+                <>
+                  Send Message
+                  <Send size={15} />
+                </>
+              )}
             </button>
 
-            {/* Status messages */}
+            {/* Status messages with icons */}
             {status === "success" && (
-              <p className="text-emerald-400 text-sm text-center font-medium mt-2">
-                Message sent successfully! I'll get back to you soon.
-              </p>
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-center gap-2 justify-center py-2 px-4 rounded-lg"
+                style={{
+                  background: "hsla(150, 60%, 50%, 0.08)",
+                  border: "1px solid hsla(150, 60%, 50%, 0.2)",
+                }}
+              >
+                <CheckCircle size={16} className="text-emerald-400" />
+                <p className="text-emerald-400 text-sm font-medium">
+                  Message sent! I'll get back to you soon.
+                </p>
+              </motion.div>
             )}
             {status === "error" && (
-              <p className="text-destructive text-sm text-center font-medium mt-2">
-                Failed to send message. Please try again or email me directly.
-              </p>
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-center gap-2 justify-center py-2 px-4 rounded-lg"
+                style={{
+                  background: "hsla(0, 60%, 50%, 0.08)",
+                  border: "1px solid hsla(0, 60%, 50%, 0.2)",
+                }}
+              >
+                <XCircle size={16} className="text-destructive" />
+                <p className="text-destructive text-sm font-medium">
+                  Failed to send. Please email me directly.
+                </p>
+              </motion.div>
             )}
           </form>
         </motion.div>

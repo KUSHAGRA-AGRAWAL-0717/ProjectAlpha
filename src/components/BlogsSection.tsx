@@ -42,13 +42,11 @@ export default function BlogsSection() {
       {/* Header bar */}
       <div className="grid-header-bar flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="flex-1">
-          <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-widest mb-1 flex items-center gap-2">
-            Articles, Learnings & Insights
-          </h3>
-          <h2 className="text-[1.9rem] md:text-[2.4rem] font-extrabold text-foreground mb-2 tracking-tight">
-            Latest <span className="gradient-text">Blogs</span>
+          <span className="section-eyebrow">Articles, Learnings & Insights</span>
+          <h2 className="text-[1.9rem] md:text-[2.4rem] font-extrabold text-foreground mb-2 tracking-tight section-title-underline">
+            Latest <span className="gradient-text-animated">Blogs</span>
           </h2>
-          <p className="text-muted-foreground/80 max-w-lg text-sm">
+          <p className="text-muted-foreground/80 max-w-lg text-sm mt-3">
             A collection of articles covering software engineering, AI, startups, system design, interview preparation, and lessons learned while building products.
           </p>
         </div>

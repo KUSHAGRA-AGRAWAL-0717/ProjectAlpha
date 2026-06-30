@@ -13,10 +13,10 @@ const CATEGORY_STYLES: Record<string, string> = {
 };
 
 /**
- * PROJECT CARD — Clean, Content-Focused
+ * PROJECT CARD — Enhanced, Content-Focused
  *
  * Image → Title + Description + Impact → Tech Tags → Links
- * No corner marks. No 3D rotations. No impact callout box.
+ * Gradient hover overlay, enhanced grid cell, floating tech tags.
  */
 function ProjectCardInner(
   { project, index }: { project: Project; index: number },
@@ -33,7 +33,7 @@ function ProjectCardInner(
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ delay: index * 0.08, duration: 0.5 }}
-      className="grid-cell p-0 flex flex-col group"
+      className="grid-cell-enhanced p-0 flex flex-col group"
     >
       <div className="flex flex-col h-full w-full">
         {/* ── Image / Video viewport ── */}
@@ -78,7 +78,7 @@ function ProjectCardInner(
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.05]"
                     loading="lazy"
                   />
                 ) : (
@@ -88,8 +88,9 @@ function ProjectCardInner(
                     </span>
                   </div>
                 )}
-                {/* Overlay on hover */}
-                <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2">
+
+                {/* Enhanced gradient overlay on hover */}
+                <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2">
                   {project.video && (
                     <button
                       onClick={() => setShowVideo(true)}
@@ -118,7 +119,9 @@ function ProjectCardInner(
                     {project.category}
                   </span>
                   {project.featured && (
-                    <span className="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-amber-500/15 border border-amber-500/35 text-amber-400">
+                    <span className="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-amber-500/15 border border-amber-500/35 text-amber-400"
+                      style={{ boxShadow: "0 0 10px -4px hsla(32, 80%, 50%, 0.3)" }}
+                    >
                       Featured
                     </span>
                   )}
@@ -156,12 +159,12 @@ function ProjectCardInner(
 
           <div className="grid-divider-h" />
 
-          {/* Tech stack */}
+          {/* Tech stack with floating hover */}
           <div className="p-4 py-3 flex flex-wrap gap-1.5 flex-1">
             {project.tech.slice(0, 4).map((t) => (
               <span
                 key={t}
-                className="px-2.5 py-1 text-[11px] font-medium rounded-md"
+                className="px-2.5 py-1 text-[11px] font-medium rounded-md tag-float"
                 style={{
                   background: "hsl(var(--surface-0))",
                   border: "1px solid hsl(var(--border))",
@@ -187,7 +190,7 @@ function ProjectCardInner(
 
           <div className="grid-divider-h" />
 
-          {/* Action links — simpler, cleaner */}
+          {/* Action links */}
           <div className="flex gap-0">
             <a
               href={githubLink}
