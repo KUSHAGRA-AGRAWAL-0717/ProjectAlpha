@@ -46,7 +46,7 @@ export default function BlogsSection() {
           <h2 className="text-[1.9rem] md:text-[2.4rem] font-extrabold text-foreground mb-2 tracking-tight section-title-underline">
             Latest <span className="gradient-text-animated">Blogs</span>
           </h2>
-          <p className="text-muted-foreground/80 max-w-lg text-sm mt-3">
+          <p className="text-muted-foreground/80 max-w-xl text-sm mt-3">
             A collection of articles covering software engineering, AI, startups, system design, interview preparation, and lessons learned while building products.
           </p>
         </div>
@@ -58,16 +58,24 @@ export default function BlogsSection() {
           Array.from({ length: 3 }).map((_, idx) => (
             <div key={idx} className="grid-cell p-0 flex flex-col group h-full w-full">
               <div className="flex flex-col h-full w-full bg-card rounded-xl border border-border/50 overflow-hidden">
-                <Skeleton className="w-full aspect-video rounded-none" />
-                <div className="p-4 flex flex-col flex-1 gap-3">
+                <div className="flex flex-col flex-1 p-4 pb-3 gap-3">
+                  <div className="flex justify-between items-center mb-1">
+                    <Skeleton className="h-5 w-16" />
+                    <Skeleton className="h-4 w-24" />
+                  </div>
                   <Skeleton className="h-5 w-3/4" />
                   <Skeleton className="h-4 w-full" />
                   <Skeleton className="h-4 w-5/6" />
+                  <Skeleton className="h-4 w-4/6" />
                 </div>
                 <div className="grid-divider-h" />
-                <div className="p-4 flex gap-2">
-                  <Skeleton className="h-6 w-16" />
-                  <Skeleton className="h-6 w-16" />
+                <div className="p-4 py-3 flex gap-2">
+                  <Skeleton className="h-5 w-16 rounded" />
+                  <Skeleton className="h-5 w-20 rounded" />
+                </div>
+                <div className="grid-divider-h" />
+                <div className="p-3 flex justify-center">
+                   <Skeleton className="h-4 w-32" />
                 </div>
               </div>
             </div>

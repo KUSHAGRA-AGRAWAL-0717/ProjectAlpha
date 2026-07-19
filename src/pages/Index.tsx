@@ -41,14 +41,14 @@ const Index = () => {
       {/* ══════════════════════════════════════════════
           MASTER GRID — One Connected System
       ══════════════════════════════════════════════ */}
-      <main className="relative z-10 pt-20 pb-0 px-3 sm:px-5 max-w-7xl mx-auto">
+      <main className="relative z-10 pt-20 pb-0 px-3 sm:px-5 max-w-6xl mx-auto">
         <div className="grid-master">
           {/* ── HERO ── */}
           <div className="grid-section">
             <HeroSection />
           </div>
 
-          {/* ── SERVICES ── */}
+          {/* ── AREAS OF EXPERTISE ── */}
           <div className="grid-section section-glow-amber">
             <ServicesSection />
           </div>

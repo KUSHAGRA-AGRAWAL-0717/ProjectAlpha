@@ -5,18 +5,17 @@ import TiltCard from "./ui/TiltCard";
 
 const EXPERIENCE = [
   {
-    title: "Freelance Software Developer",
-    company: "Self-Employed",
-    period: "2024 — Present",
-    type: "Remote",
-    description: "Working with startups and independent clients building SaaS platforms, AI automation systems, and full-stack web applications.",
+    title: "Software Development Engineer Intern",
+    company: "Amazon",
+    period: "Jul 2025 — Present",
+    type: "On-site",
+    description: "Working on backend systems within Amazon Prime Tech using Java, Spring Boot, AWS, and distributed systems.",
     bullets: [
-      "Delivered end-to-end systems including frontend UI, backend APIs, and database architecture",
-      "Built AI integrations for multiple clients across different domains",
-      "Designed scalable SaaS architectures",
-      "Built data processing pipelines for automation",
+      "Building backend services within the Prime Tech team",
+      "Working with Java, Spring Boot, and AWS infrastructure",
+      "Contributing to distributed systems serving production workloads",
     ],
-    tags: ["React", "Node.js", "Python", "AI/ML", "Cloud"],
+    tags: ["Java", "Spring Boot", "AWS", "Distributed Systems"],
     current: true,
   },
   {
@@ -97,7 +96,7 @@ export default function ExperienceSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: i * 0.1, duration: 0.5 }}
-              className="grid-cell-enhanced group"
+              className="grid-cell-enhanced group p-5 sm:p-5 lg:p-6"
               style={{
                 borderBottom: i < EXPERIENCE.length - 1 ? "1px solid var(--grid-border-color)" : "none",
                 borderLeft: exp.current ? "2px solid hsl(32, 80%, 55%)" : undefined,
@@ -114,11 +113,11 @@ export default function ExperienceSection() {
                 }}
               />
 
-              <div className="sm:pl-6">
+              <div className="sm:pl-10">
                 {/* Header */}
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1.5 mb-2.5">
                   <div>
-                    <h3 className="text-base font-bold text-foreground group-hover:text-accent transition-colors duration-200">
+                    <h3 className="text-[15px] font-bold text-foreground group-hover:text-accent transition-colors duration-200">
                       {exp.title}
                     </h3>
                     <p className="text-sm font-semibold text-accent/90 mt-0.5">
@@ -127,34 +126,34 @@ export default function ExperienceSection() {
                   </div>
                   <div className="flex flex-wrap gap-2 flex-shrink-0">
                     {exp.current && (
-                      <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 flex items-center gap-1.5"
+                      <span className="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 flex items-center gap-1.5"
                         style={{ boxShadow: "0 0 12px -4px hsla(150, 60%, 50%, 0.3)" }}
                       >
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse-slow" />
                         Active
                       </span>
                     )}
-                    <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-secondary border border-border text-muted-foreground">
+                    <span className="px-2.5 py-1 rounded-full text-[11px] font-medium bg-secondary border border-border text-muted-foreground">
                       {exp.type}
                     </span>
                   </div>
                 </div>
 
                 {/* Date */}
-                <div className="flex items-center gap-1.5 text-xs text-muted-foreground mb-3 font-mono">
+                <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground mb-2.5 font-mono">
                   <Calendar size={11} className="text-accent/60" />
                   {exp.period}
                 </div>
 
-                <div className="grid-divider-h mb-3" />
+                <div className="grid-divider-h mb-2.5" />
 
                 {/* Description */}
-                <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+                <p className="text-[13px] text-muted-foreground mb-3 leading-relaxed">
                   {exp.description}
                 </p>
 
                 {/* Bullets with staggered animation */}
-                <ul className="space-y-2 mb-4 list-none">
+                <ul className="space-y-1.5 mb-3 list-none">
                   {exp.bullets.map((b, bi) => (
                     <motion.li
                       key={bi}
@@ -162,7 +161,7 @@ export default function ExperienceSection() {
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: 0.1 + bi * 0.05, duration: 0.3 }}
-                      className="flex items-start gap-2.5 text-sm text-muted-foreground list-none"
+                      className="flex items-start gap-2.5 text-[13px] text-muted-foreground list-none"
                     >
                       <span
                         className="mt-1.5 flex-shrink-0"
@@ -179,7 +178,7 @@ export default function ExperienceSection() {
                   ))}
                 </ul>
 
-                <div className="grid-divider-h mb-3" />
+                <div className="grid-divider-h mb-2.5" />
 
                 {/* Tags */}
                 <div className="flex flex-wrap gap-1.5">
@@ -204,7 +203,7 @@ export default function ExperienceSection() {
             className="grid-cell p-0 relative overflow-hidden group"
             style={{ borderBottom: "1px solid var(--grid-border-color)" }}
           >
-            <TiltCard intensity={5} className="w-full h-full p-5 sm:p-6">
+            <TiltCard intensity={5} className="w-full h-full p-4 sm:p-5">
               {/* Full Background Video */}
               <div className="absolute inset-0 z-0 rounded-lg overflow-hidden">
                 <video autoPlay muted loop playsInline className="w-full h-full object-cover opacity-30 group-hover:opacity-40 transition-opacity duration-300">
@@ -256,7 +255,7 @@ export default function ExperienceSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="grid-cell-enhanced"
+            className="grid-cell-enhanced p-4 sm:p-5"
             style={{ borderBottom: "1px solid var(--grid-border-color)" }}
           >
             <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-widest mb-4 flex items-center gap-2">
@@ -293,7 +292,7 @@ export default function ExperienceSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            className="grid-cell-enhanced flex-1"
+            className="grid-cell-enhanced flex-1 p-4 sm:p-5"
           >
             <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-widest mb-4 flex items-center gap-2">
               <Users size={14} className="text-accent" />
@@ -344,7 +343,7 @@ export default function ExperienceSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ delay: 0.35, duration: 0.5 }}
-            className="grid-cell-enhanced"
+            className="grid-cell-enhanced p-4 sm:p-5"
           >
             <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-widest mb-4 flex items-center gap-2">
               🎨 Hobbies & Interests

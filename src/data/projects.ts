@@ -22,6 +22,9 @@ export type Project = {
   github?: string;
   link?: string;
   featured?: boolean;
+  problem?: string;
+  solution?: string;
+  metrics?: { value: string; label: string }[];
 };
 
 export const PROJECTS: Project[] = [
@@ -32,9 +35,16 @@ export const PROJECTS: Project[] = [
     year: "2026",
     description:
       "AI-powered SEO content automation platform that helps businesses research keywords, generate optimized content, and automatically publish articles.",
+    problem: "Businesses spend hours researching SEO and generating content manually.",
+    solution: "Built an AI-powered automation platform combining LLMs, keyword research, and workflow automation for end-to-end content production.",
     tech: ["Vite", "TypeScript", "Supabase", "Redis", "LLMs"],
     impact:
       "Processes 500+ queries per day, reduced content production time by 70%",
+    metrics: [
+      { value: "500+", label: "Queries/Day" },
+      { value: "70%", label: "Faster Processing" },
+      { value: "Production", label: "Ready" },
+    ],
     image: outrankpilotImg,
     video:
       "https://drive.google.com/file/d/1JD1yWL4VUuyVV1GSMjsSwgsIHDCcWNnO/preview",
@@ -49,10 +59,16 @@ export const PROJECTS: Project[] = [
     year: "2026",
     description:
       "Production-style event-driven microservices platform converting video files to MP3 using an asynchronous pipeline. Features JWT auth, API Gateway routing, and MongoDB GridFS file handling.",
+    problem: "Need for a scalable, asynchronous media conversion pipeline with proper service isolation.",
+    solution: "Architected an event-driven microservices platform with RabbitMQ for async processing, API Gateway for routing, and GridFS for large file storage.",
     tech: ["Python", "FastAPI", "RabbitMQ", "Docker", "Kubernetes", "MongoDB", "NGINX"],
     impact:
       "End-to-end scalable workflow supporting upload → convert → notify → download",
-    // image removed to avoid duplicate thumbnail
+    metrics: [
+      { value: "5", label: "Microservices" },
+      { value: "E2E", label: "Async Pipeline" },
+      { value: "K8s", label: "Orchestrated" },
+    ],
     github: "https://github.com/KUSHAGRA-AGRAWAL-0717/kubernetes-rabbitMq",
     featured: true,
   },
@@ -63,10 +79,16 @@ export const PROJECTS: Project[] = [
     year: "2026",
     description:
       "Architected a microservices-based backend platform simulating a ride management system with independent User, Captain, and Ride services.",
+    problem: "Monolithic backends struggle with scaling independent features and cause deployment bottlenecks.",
+    solution: "Designed a microservices architecture with event-driven communication, centralized API Gateway, and real-time status updates via long-polling.",
     tech: ["Node.js", "Express", "MongoDB", "RabbitMQ", "Docker", "NGINX"],
     impact:
       "Event-driven architecture with centralized API Gateway and long-polling for real-time status",
-    // image removed to avoid duplicate thumbnail
+    metrics: [
+      { value: "3", label: "Independent Services" },
+      { value: "Real-time", label: "Long Polling" },
+      { value: "Event-Driven", label: "Architecture" },
+    ],
     github: "https://github.com/KUSHAGRA-AGRAWAL-0717/microservices",
     featured: true,
   },
@@ -77,9 +99,15 @@ export const PROJECTS: Project[] = [
     year: "2024",
     description:
       "AI system that automatically generates personalized cold emails for job applications and business outreach using vector-based personalization.",
+    problem: "Researching companies and crafting personalized outreach emails is time-consuming and inconsistent.",
+    solution: "Built a vector-search-powered AI system that auto-generates personalized cold emails by matching user profiles to company data.",
     tech: ["LangChain", "LLaMA-3", "Vector Database", "Python"],
     impact:
       "Reduced manual research time by 80%, improved matching accuracy to 90%",
+    metrics: [
+      { value: "80%", label: "Less Research Time" },
+      { value: "90%", label: "Match Accuracy" },
+    ],
     image: autopitchImg,
     video:
       "https://drive.google.com/file/d/1FvCzYOnBLPV8ftF8MTOQI4g_T2a_oFie/preview",
@@ -93,8 +121,14 @@ export const PROJECTS: Project[] = [
     year: "2025",
     description:
       "Multi-agent AI elderly care system — a smart companion app for seniors with health monitoring, fall detection, reminders, and social engagement.",
+    problem: "Seniors living alone lack accessible, integrated health monitoring and companionship tools.",
+    solution: "Built a multi-agent AI system orchestrating personalized care — from health monitoring to social engagement — in a single accessible interface.",
     tech: ["React", "TypeScript", "Node.js", "FastAPI", "Supabase"],
     impact: "AI orchestrates personalized care for seniors living alone",
+    metrics: [
+      { value: "Multi-Agent", label: "AI System" },
+      { value: "1M+", label: "Target Users" },
+    ],
     image: eldermateImg,
     video:
       "https://drive.google.com/file/d/1XqxJ8HNcYjBs7XMbeRo_5oeI0zfbRIky/preview",
@@ -169,8 +203,14 @@ export const PROJECTS: Project[] = [
     year: "2025",
     description:
       "ML system that detects tomato plant diseases from leaf images. Trained on 20K+ images supporting 10+ diseases.",
+    problem: "Farmers lack quick, accessible tools to identify plant diseases early.",
+    solution: "Trained a CNN-based classifier on 20K+ leaf images covering 10+ tomato diseases, served via a FastAPI endpoint.",
     tech: ["TensorFlow", "CNN", "FastAPI"],
     impact: "96.88% accuracy",
+    metrics: [
+      { value: "96.88%", label: "Accuracy" },
+      { value: "20K+", label: "Training Images" },
+    ],
     image: tomatoImg,
     github: "https://github.com/KUSHAGRA-AGRAWAL-0717/Tomato-disease-detector",
   },

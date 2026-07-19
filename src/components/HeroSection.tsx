@@ -1,34 +1,34 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Github, Linkedin, Code, Mail, ArrowRight } from "lucide-react";
-import CodingVideo from "./Coding.mp4";
+import { Github, Linkedin, Code, Mail, ArrowRight, Twitter } from "lucide-react";
 import TiltCard from "./ui/TiltCard";
 
 const SOCIALS = [
   { icon: Github, href: "https://github.com/KUSHAGRA-AGRAWAL-0717", label: "GitHub" },
   { icon: Linkedin, href: "https://linkedin.com/in/kushagraagrawal017", label: "LinkedIn" },
   { icon: Code, href: "https://leetcode.com/u/Kushagra_0717", label: "LeetCode" },
+  { icon: Twitter, href: "https://x.com/KushagraAg0717", label: "X (Twitter)" },
   { icon: Mail, href: "mailto:kushagraagrawal.9672@gmail.com", label: "Email" },
 ];
 
 const ROLES = [
-  "Full-Stack Developer",
-  "AI Engineer",
-  "SaaS Builder",
-  "LLM Integrations",
+  "Software Engineer",
+  "Backend Developer",
+  "Full Stack Developer",
+  "AI Application Developer",
 ];
 
 const STATS = [
   { value: "10+", label: "Projects Shipped" },
   { value: "3", label: "Internships" },
-  { value: "850+", label: "DSA Problems" },
+  { value: "850+", label: "Problems Solved" },
   { value: "NIT", label: "Jalandhar" },
 ];
 
 const BIO_POINTS = [
-  "I build AI-powered SaaS products that automate real business workflows",
-  "From OCR invoice processing to SEO content platforms — full-stack delivery",
-  "I ship production-ready systems with modern web tech, built to scale",
+  "Building scalable backend systems and AI-powered applications.",
+  "Experienced with distributed systems, automation, cloud technologies, and modern web development.",
+  "Turning ideas into production-ready software.",
 ];
 
 function useTypewriter(words: string[], typingSpeed = 80, pauseDuration = 1800) {
@@ -64,11 +64,157 @@ function useTypewriter(words: string[], typingSpeed = 80, pauseDuration = 1800) 
   return display;
 }
 
+/* ── Animated Distributed System Architecture Visualization ── */
+function SystemArchitectureViz() {
+  const nodes = [
+    { id: "client", label: "Client", x: 140, y: 18 },
+    { id: "lb", label: "Load Balancer", x: 140, y: 68 },
+    { id: "gateway", label: "API Gateway", x: 140, y: 118 },
+    { id: "svcA", label: "Service A", x: 70, y: 178 },
+    { id: "svcB", label: "Service B", x: 210, y: 178 },
+    { id: "cache", label: "Redis Cache", x: 50, y: 238 },
+    { id: "queue", label: "Message Queue", x: 230, y: 238 },
+    { id: "db", label: "Database", x: 140, y: 298 },
+  ];
+
+  const edges: [string, string][] = [
+    ["client", "lb"],
+    ["lb", "gateway"],
+    ["gateway", "svcA"],
+    ["gateway", "svcB"],
+    ["svcA", "cache"],
+    ["svcB", "queue"],
+    ["cache", "db"],
+    ["queue", "db"],
+  ];
+
+  const nodeMap = Object.fromEntries(nodes.map((n) => [n.id, n]));
+
+  return (
+    <div className="w-full h-full flex items-center justify-center p-3">
+      <svg viewBox="0 0 280 330" className="w-full h-full" style={{ maxWidth: 300, maxHeight: 330 }}>
+        <defs>
+          {/* Glow filter */}
+          <filter id="nodeGlow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          {/* Animated dot gradient */}
+          <radialGradient id="dotGrad">
+            <stop offset="0%" stopColor="hsl(32, 80%, 55%)" stopOpacity="1" />
+            <stop offset="100%" stopColor="hsl(32, 80%, 55%)" stopOpacity="0" />
+          </radialGradient>
+        </defs>
+
+        {/* Edges */}
+        {edges.map(([fromId, toId], i) => {
+          const from = nodeMap[fromId];
+          const to = nodeMap[toId];
+          const pathId = `edge-${fromId}-${toId}`;
+          return (
+            <g key={pathId}>
+              <line
+                x1={from.x}
+                y1={from.y + 14}
+                x2={to.x}
+                y2={to.y - 6}
+                stroke="hsla(220, 10%, 35%, 0.5)"
+                strokeWidth="1"
+                strokeDasharray="4 3"
+              />
+              {/* Animated data-flow dot */}
+              <circle r="2.5" fill="hsl(32, 80%, 55%)" opacity="0.8">
+                <animateMotion
+                  dur={`${2.2 + i * 0.3}s`}
+                  repeatCount="indefinite"
+                  keyPoints="0;1"
+                  keyTimes="0;1"
+                >
+                  <mpath>
+                    <line x1={from.x} y1={from.y + 14} x2={to.x} y2={to.y - 6} />
+                  </mpath>
+                </animateMotion>
+                {/* Fallback: animate along the line using values */}
+                <animate
+                  attributeName="cx"
+                  values={`${from.x};${to.x}`}
+                  dur={`${2.2 + i * 0.3}s`}
+                  repeatCount="indefinite"
+                />
+                <animate
+                  attributeName="cy"
+                  values={`${from.y + 14};${to.y - 6}`}
+                  dur={`${2.2 + i * 0.3}s`}
+                  repeatCount="indefinite"
+                />
+              </circle>
+            </g>
+          );
+        })}
+
+        {/* Nodes */}
+        {nodes.map((node, i) => (
+          <g key={node.id}>
+            {/* Node background */}
+            <rect
+              x={node.x - 48}
+              y={node.y - 10}
+              width={96}
+              height={22}
+              rx={6}
+              fill="hsla(220, 14%, 12%, 0.85)"
+              stroke={node.id === "gateway" ? "hsla(32, 80%, 55%, 0.5)" : "hsla(220, 10%, 28%, 0.6)"}
+              strokeWidth={node.id === "gateway" ? 1.5 : 0.8}
+              filter={node.id === "gateway" ? "url(#nodeGlow)" : undefined}
+            >
+              {/* Subtle pulse on gateway */}
+              {node.id === "gateway" && (
+                <animate
+                  attributeName="stroke-opacity"
+                  values="0.5;0.9;0.5"
+                  dur="3s"
+                  repeatCount="indefinite"
+                />
+              )}
+            </rect>
+            {/* Node label */}
+            <text
+              x={node.x}
+              y={node.y + 4}
+              textAnchor="middle"
+              fontSize="8"
+              fontFamily="'JetBrains Mono', monospace"
+              fontWeight="500"
+              fill={node.id === "gateway" ? "hsl(32, 80%, 60%)" : "hsl(220, 10%, 70%)"}
+              style={{ userSelect: "none" }}
+            >
+              {node.label}
+            </text>
+            {/* Entrance animation opacity */}
+            <animateTransform
+              attributeName="transform"
+              type="translate"
+              from={`0 ${8}`}
+              to="0 0"
+              dur="0.5s"
+              begin={`${i * 0.08}s`}
+              fill="freeze"
+            />
+          </g>
+        ))}
+      </svg>
+    </div>
+  );
+}
+
 /**
- * HERO SECTION — Clean Split Layout (Enhanced)
+ * HERO SECTION — Clean Split Layout (Refined for Engineering)
  *
- * Left: Name (modern weight), role, bio bullets, CTAs, social links, stats
- * Right: Abstract geometric composition with masked video
+ * Left: Amazon title, name, role typewriter, bio bullets, CTAs, socials
+ * Right: Animated distributed system architecture visualization
  */
 export default function HeroSection() {
   const role = useTypewriter(ROLES);
@@ -81,14 +227,21 @@ export default function HeroSection() {
         {/* ── LEFT PANEL: Content ── */}
         <div className="grid-cell flex flex-col justify-center py-10 sm:py-16 px-6 sm:px-10 relative">
           <div className="relative z-10 max-w-2xl">
-            {/* Status badge */}
+            {/* Amazon role title */}
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="mb-6"
+              className="mb-4"
             >
-              <span className="section-badge">
+              <span
+                className="inline-flex items-center gap-2 px-4 py-1.5 text-xs font-semibold tracking-wide rounded-md"
+                style={{
+                  background: "linear-gradient(135deg, hsla(32, 80%, 55%, 0.1), hsla(32, 80%, 55%, 0.03))",
+                  border: "1px solid hsla(32, 80%, 55%, 0.25)",
+                  color: "hsl(32, 80%, 60%)",
+                }}
+              >
                 <span
                   className="animate-pulse-slow"
                   style={{
@@ -101,17 +254,8 @@ export default function HeroSection() {
                     flexShrink: 0,
                   }}
                 />
-                Available for Freelance & Full-time
+                SDE Intern @ Amazon
               </span>
-            </motion.div>
-
-            {/* Section eyebrow */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.05, duration: 0.4 }}
-            >
-              <span className="section-eyebrow">Creative Full-Stack & AI Engineer</span>
             </motion.div>
 
             {/* Name — reduced size, modern weight mixing */}
@@ -119,7 +263,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1, duration: 0.5 }}
-              className="mb-4 leading-[1.1]"
+              className="mb-2 leading-[1.1]"
             >
               <span
                 className="block text-lg sm:text-xl font-normal tracking-tight mb-1"
@@ -131,6 +275,16 @@ export default function HeroSection() {
                 Kushagra Agrawal
               </span>
             </motion.h1>
+
+            {/* Engineering subtitle */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.15, duration: 0.4 }}
+              className="text-sm sm:text-base text-muted-foreground/80 mb-5 max-w-lg leading-relaxed"
+            >
+              Building scalable backend systems, AI-powered applications, and modern full-stack products.
+            </motion.p>
 
             {/* Role typewriter */}
             <motion.div
@@ -193,7 +347,7 @@ export default function HeroSection() {
                 <ArrowRight size={16} />
               </a>
               <a href="#contact" className="skeuo-btn skeuo-btn-secondary px-7 py-3 text-sm font-semibold">
-                Hire Me
+                Get In Touch
               </a>
             </motion.div>
 
@@ -223,29 +377,36 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* ── RIGHT PANEL: Premium Masked Video ── */}
+        {/* ── RIGHT PANEL: Distributed System Architecture ── */}
         <div className="grid-cell-flush hidden lg:flex items-center justify-center relative overflow-hidden"
           style={{ background: "hsl(var(--surface-0))" }}
         >
-          <TiltCard className="w-full max-w-[320px] max-h-[320px] p-4 flex items-center justify-center">
-            <div className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-2xl ring-1 ring-border/50 bg-white">
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="w-full h-full object-cover"
+          <TiltCard className="w-full max-w-[340px] max-h-[380px] p-2 flex items-center justify-center">
+            <div
+              className="relative w-full rounded-2xl overflow-hidden ring-1 ring-border/50"
+              style={{
+                background: "linear-gradient(135deg, hsla(220, 14%, 10%, 0.95), hsla(220, 14%, 8%, 0.98))",
+                boxShadow: "0 8px 32px -8px hsla(220, 20%, 4%, 0.5), inset 0 1px 0 0 hsla(220, 10%, 30%, 0.1)",
+              }}
+            >
+              {/* Title bar */}
+              <div
+                className="flex items-center gap-2 px-4 py-2.5 border-b"
+                style={{ borderColor: "hsla(220, 10%, 22%, 0.5)" }}
               >
-                <source src={CodingVideo} type="video/mp4" />
-              </video>
-              
-              {/* Overlay Badge */}
-              <div className="absolute bottom-6 left-6 z-20">
-                <div className="backdrop-blur-md bg-white/80 dark:bg-black/60 rounded-xl p-3 border border-border/50 flex items-center gap-3 shadow-lg">
-                  <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse-slow" />
-                  <span className="text-xs font-medium tracking-wide dark:text-white text-black">System Online</span>
+                <div className="flex gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
                 </div>
+                <span
+                  className="text-[10px] font-mono tracking-wider ml-2"
+                  style={{ color: "hsl(220, 10%, 50%)" }}
+                >
+                  system-architecture
+                </span>
               </div>
+              <SystemArchitectureViz />
             </div>
           </TiltCard>
         </div>

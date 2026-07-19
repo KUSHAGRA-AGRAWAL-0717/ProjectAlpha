@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { Send, Mail, Phone, MapPin, Github, Linkedin, Code, CheckCircle, XCircle } from "lucide-react";
+import { Send, Mail, Phone, MapPin, Github, Linkedin, Code, CheckCircle, XCircle, Twitter } from "lucide-react";
 import emailjs from "@emailjs/browser";
 import SceneVideo from "./Scene.mp4";
 
@@ -14,6 +14,7 @@ const SOCIAL_LINKS = [
   { icon: Github, href: "https://github.com/KUSHAGRA-AGRAWAL-0717", label: "GitHub" },
   { icon: Linkedin, href: "https://linkedin.com/in/kushagraagrawal017", label: "LinkedIn" },
   { icon: Code, href: "https://leetcode.com/u/Kushagra_0717", label: "LeetCode" },
+  { icon: Twitter, href: "https://x.com/KushagraAg0717", label: "X (Twitter)" },
   { icon: Mail, href: "mailto:kushagraagrawal.9672@gmail.com", label: "Email" },
 ];
 
@@ -66,10 +67,10 @@ export default function ContactSection() {
         <div>
           <span className="section-eyebrow">Get In Touch</span>
           <h2 className="text-[1.9rem] md:text-[2.4rem] font-extrabold text-foreground mb-2 tracking-tight section-title-underline">
-            Let's Work <span className="gradient-text-animated">Together</span>
+            Let's <span className="gradient-text-animated">Connect</span>
           </h2>
           <p className="text-muted-foreground/80 max-w-lg text-sm mt-3">
-            Have a project in mind? Let's discuss how I can help bring your ideas to life.
+            Interested in collaborating or have an opportunity? I'd love to hear from you.
           </p>
         </div>
       </div>
@@ -83,7 +84,7 @@ export default function ContactSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.5 }}
-          className="grid-cell flex flex-col relative overflow-hidden group"
+          className="grid-cell flex flex-col relative overflow-hidden group p-5 sm:p-6 lg:p-6"
         >
           {/* Full Left Column Background Video */}
           <div className="absolute inset-0 z-0">
@@ -94,24 +95,28 @@ export default function ContactSection() {
           </div>
 
           <div className="relative z-10 flex flex-col h-full">
-            {/* Availability card */}
+            {/* Current Position card */}
             <div
-              className="rounded-lg p-4 mb-4 relative overflow-hidden backdrop-blur-md"
+              className="rounded-lg p-3.5 mb-3.5 relative overflow-hidden backdrop-blur-md"
               style={{
                 background: "hsla(var(--card), 0.5)",
                 border: "1px solid hsla(var(--border), 0.5)",
                 boxShadow: "0 4px 16px -4px hsla(var(--shadow-color), 0.15), inset 0 1px 0 0 hsla(var(--highlight), 0.05)",
               }}
             >
-              <div className="flex items-center gap-2 mb-1.5">
+              <div className="flex items-center gap-2 mb-2">
                 <span
                   className="w-2 h-2 rounded-full animate-pulse-slow"
                   style={{ background: "hsl(150, 60%, 50%)", boxShadow: "0 0 8px hsla(150, 60%, 50%, 0.4)" }}
                 />
-                <span className="text-sm font-bold text-foreground">Available for Work</span>
+               
               </div>
+
+              <div className="grid-divider-h mb-3 opacity-50" />
+
+              <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground block mb-1">Open to</span>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Currently accepting freelance projects and full-time opportunities.
+                Software Engineering opportunities after graduation.
               </p>
             </div>
 
@@ -122,11 +127,11 @@ export default function ContactSection() {
               Contact Information
             </h3>
 
-            <div className="space-y-4 mb-4">
+            <div className="space-y-3 mb-4">
               {CONTACT_INFO.map((c) => (
-                <div key={c.label} className="flex items-center gap-3 group/item">
+                <div key={c.label} className="flex items-center gap-2.5 group/item">
                   <div
-                    className="w-9 h-9 shrink-0 flex items-center justify-center rounded-lg"
+                    className="w-8 h-8 shrink-0 flex items-center justify-center rounded-lg"
                     style={{
                       background: "linear-gradient(135deg, hsla(32, 80%, 55%, 0.1), hsla(32, 80%, 55%, 0.03))",
                       border: "1px solid hsla(32, 80%, 55%, 0.15)",
@@ -140,12 +145,12 @@ export default function ContactSection() {
                     {c.href ? (
                       <a
                         href={c.href}
-                        className="text-sm font-semibold text-foreground hover:text-accent transition-colors link-underline drop-shadow-sm"
+                        className="text-[13px] font-semibold text-foreground hover:text-accent transition-colors link-underline drop-shadow-sm"
                       >
                         {c.value}
                       </a>
                     ) : (
-                      <p className="text-sm font-semibold text-foreground drop-shadow-sm">{c.value}</p>
+                      <p className="text-[13px] font-semibold text-foreground drop-shadow-sm">{c.value}</p>
                     )}
                   </div>
                 </div>
@@ -182,7 +187,7 @@ export default function ContactSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ delay: 0.1, duration: 0.5 }}
-          className="grid-cell"
+          className="grid-cell p-5 sm:p-6 lg:p-6"
         >
           <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
             {/* Name + Email row */}
@@ -196,7 +201,7 @@ export default function ContactSection() {
                   id="user_name"
                   name="user_name"
                   required
-                  className="input-field input-enhanced input-focus-ripple w-full px-4 py-2.5 text-sm outline-none"
+                  className="input-field input-enhanced input-focus-ripple w-full px-3.5 py-2 text-[13px] outline-none"
                   placeholder="John Doe"
                 />
               </div>
@@ -209,7 +214,7 @@ export default function ContactSection() {
                   id="user_email"
                   name="user_email"
                   required
-                  className="input-field input-enhanced input-focus-ripple w-full px-4 py-2.5 text-sm outline-none"
+                  className="input-field input-enhanced input-focus-ripple w-full px-3.5 py-2 text-[13px] outline-none"
                   placeholder="john@example.com"
                 />
               </div>
@@ -224,7 +229,7 @@ export default function ContactSection() {
                 type="tel"
                 id="user_phone"
                 name="user_phone"
-                className="input-field input-enhanced input-focus-ripple w-full px-4 py-2.5 text-sm outline-none"
+                className="input-field input-enhanced input-focus-ripple w-full px-3.5 py-2 text-[13px] outline-none"
                 placeholder="+1 (555) 000-0000"
               />
             </div>
@@ -239,7 +244,7 @@ export default function ContactSection() {
                 id="subject"
                 name="subject"
                 required
-                className="input-field input-enhanced input-focus-ripple w-full px-4 py-2.5 text-sm outline-none"
+                className="input-field input-enhanced input-focus-ripple w-full px-3.5 py-2 text-[13px] outline-none"
                 placeholder="Project Inquiry"
               />
             </div>
@@ -254,7 +259,7 @@ export default function ContactSection() {
                 name="message"
                 required
                 rows={5}
-                className="input-field input-enhanced input-focus-ripple resize-none w-full px-4 py-2.5 text-sm outline-none"
+                className="input-field input-enhanced input-focus-ripple resize-none w-full px-3.5 py-2 text-[13px] outline-none"
                 placeholder="Tell me about your project..."
               />
             </div>

@@ -178,14 +178,14 @@ export default function Navbar() {
             className="icon-btn h-9 px-4 gap-1.5 text-xs font-semibold"
           >
             <Download size={14} />
-            Resume
+            Download Resume
           </a>
           <a
             href="#contact"
             onClick={(e) => handleNavClick(e, "#contact")}
             className="skeuo-btn skeuo-btn-primary px-5 py-2 text-sm"
           >
-            Hire Me
+            Contact
           </a>
         </div>
 
@@ -269,7 +269,7 @@ export default function Navbar() {
                 onClick={(e) => handleNavClick(e, "#contact")}
                 className="skeuo-btn skeuo-btn-primary w-full py-2.5 text-sm mt-1"
               >
-                Hire Me
+                Contact
               </a>
             </div>
           </motion.div>

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Github, Linkedin, Code, Mail, ArrowUp, Heart } from "lucide-react";
+import { Github, Linkedin, Code, Mail, ArrowUp, Heart, Twitter } from "lucide-react";
 
 const NAV_LINKS = [
   { label: "Projects", href: "#projects" },
@@ -13,7 +13,8 @@ const SOCIALS = [
   { icon: Github, href: "https://github.com/KUSHAGRA-AGRAWAL-0717", label: "GitHub" },
   { icon: Linkedin, href: "https://linkedin.com/in/kushagraagrawal017", label: "LinkedIn" },
   { icon: Code, href: "https://leetcode.com/u/Kushagra_0717", label: "LeetCode" },
-  { icon: Mail, href: "mailto:kushagraagrawal.9672@gmail.com", label: "Email" },
+  { icon: Twitter, href: "https://x.com/KushagraAg0717", label: "X (Twitter)" },
+  { icon: Mail, href: "mailto:kushagraagrawal655@gmail.com", label: "Email" },
 ];
 
 /**
@@ -43,7 +44,7 @@ export default function FooterSection() {
             KA<span className="gradient-text-animated">.</span>
           </motion.span>
           <p className="text-sm text-muted-foreground mt-2.5 leading-relaxed max-w-xs">
-            Building intelligent SaaS systems and AI-powered applications.
+            Building software that scales — from AI-powered applications to distributed backend systems.
           </p>
           <div className="flex gap-2 mt-5">
             {SOCIALS.map((s) => (
@@ -63,24 +64,7 @@ export default function FooterSection() {
           </div>
         </div>
 
-        {/* Quick links */}
-        <div className="grid-cell">
-          <h4 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">
-            Quick Links
-          </h4>
-          <div className="space-y-2.5">
-            {NAV_LINKS.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                className="block text-sm text-muted-foreground hover:text-foreground hover:translate-x-1 transition-all duration-200 link-underline w-fit"
-              >
-                {l.label}
-              </a>
-            ))}
-          </div>
-        </div>
-
+       
         {/* Contact */}
         <div className="grid-cell">
           <h4 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">
@@ -88,10 +72,10 @@ export default function FooterSection() {
           </h4>
           <div className="space-y-2.5 text-sm text-muted-foreground">
             <a
-              href="mailto:kushagraagrawal.9672@gmail.com"
+              href="mailto:kushagraagrawal655@gmail.com"
               className="block hover:text-foreground transition-colors link-underline w-fit"
             >
-              kushagraagrawal.9672@gmail.com
+              kushagraagrawal655@gmail.com
             </a>
             <a
               href="tel:+919672048846"
@@ -102,23 +86,35 @@ export default function FooterSection() {
             <p>Jalandhar, India</p>
           </div>
         </div>
+
+
+         {/* Thanks */}
+        <div className="grid-cell">
+          <h4 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">
+            Thank You
+          </h4>
+          <p className="text-[13px] text-muted-foreground leading-relaxed">
+            Thanks for visiting! Feel free to reach out if you have any questions or just want to say hi. Please visit again!
+          </p>
+        </div>
+
       </div>
 
       {/* Bottom row */}
-      <div className="grid-cell flex flex-col sm:flex-row justify-between items-center gap-4 py-4">
-        <p className="text-xs text-muted-foreground flex items-center gap-1.5">
-          © 2026 Kushagra Agrawal. Built with
+      <div className="grid-cell flex flex-col md:flex-row justify-between items-center gap-4 py-4 text-center md:text-left">
+        <p className="text-[11px] text-muted-foreground flex flex-wrap justify-center md:justify-start items-center gap-1.5">
+          © {new Date().getFullYear()} All credit goes to TypeScript, and a little to Kushagra Agrawal (that's me) 😁😛
           <Heart size={11} className="text-accent" style={{ fill: "currentColor" }} />
         </p>
-        <div className="flex items-center gap-4">
-          <p className="text-xs text-muted-foreground">
-            React & TypeScript
+        <div className="flex items-center justify-center gap-4">
+          <p className="text-[11px] text-muted-foreground font-mono">
+            Still building...
           </p>
           <motion.button
             onClick={scrollToTop}
-            whileHover={{ y: -2 }}
+            whileHover={{ y: -2, scale: 1.05 }}
             whileTap={{ scale: 0.9 }}
-            className="icon-btn w-8 h-8 rounded-lg"
+            className="icon-btn w-8 h-8 rounded-lg bg-surface-0 border border-border"
             aria-label="Scroll to top"
           >
             <ArrowUp size={14} />

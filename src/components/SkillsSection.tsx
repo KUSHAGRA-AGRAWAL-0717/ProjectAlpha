@@ -3,20 +3,19 @@ import Coding2Video from "./Coding (2).mp4";
 import TiltCard from "./ui/TiltCard";
 
 const SKILL_GROUPS = [
-  { title: "Languages", icon: "{ }", color: "32, 80%, 55%", skills: ["Python", "TypeScript", "JavaScript", "C++"] },
-  { title: "Frontend", icon: "◧", color: "200, 60%, 55%", skills: ["React", "Next.js", "Tailwind CSS", "Vite"] },
-  { title: "Backend & Events", icon: "⬡", color: "160, 50%, 50%", skills: ["Node.js", "FastAPI", "Express.js", "Apache Kafka", "RabbitMQ", "Apache Pulsar", "NATS"] },
-  { title: "AI, ML & Agents", icon: "⚡", color: "280, 50%, 60%", skills: ["LangChain", "AutoGPT", "OpenAI API", "LLMs"] },
-  { title: "Cloud & DevOps", icon: "☁", color: "220, 55%, 58%", skills: ["Docker", "Kubernetes", "AWS", "Terraform", "Ansible", "Pulumi", "Spacelift"] },
-  { title: "CI/CD & Observability", icon: "◫", color: "350, 60%, 55%", skills: ["GitHub Actions", "GitLab CI/CD", "Jenkins", "Argo Workflows", "Tekton", "Prometheus", "Grafana", "Datadog"] },
-  { title: "Automation & Workflows", icon: "↻", color: "150, 50%, 50%", skills: ["n8n", "Zapier", "Make (Integromat)", "Trigger.dev", "Inngest"] },
-  { title: "Testing Automation", icon: "✓", color: "45, 70%, 50%", skills: ["Playwright", "Selenium", "Cypress"] },
+  { title: "Languages", icon: "{ }", color: "32, 80%, 55%", skills: ["Java", "Python", "C++", "JavaScript", "TypeScript"] },
+  { title: "Backend & Events", icon: "⬡", color: "160, 50%, 50%", skills: ["Spring Boot", "FastAPI", "Node.js", "Express", "RabbitMQ", "Apache Kafka"] },
+  { title: "Frontend", icon: "◧", color: "200, 60%, 55%", skills: ["React", "Next.js", "Tailwind CSS"] },
+  { title: "Cloud & DevOps", icon: "☁", color: "220, 55%, 58%", skills: ["AWS", "Docker", "Kubernetes", "GitHub Actions"] },
+  { title: "Databases", icon: "◫", color: "350, 60%, 55%", skills: ["MongoDB", "MySQL", "Redis", "Supabase"] },
+  { title: "AI & ML", icon: "⚡", color: "280, 50%, 60%", skills: ["LangChain", "OpenAI API", "TensorFlow"] },
 ];
 
 /**
- * SKILLS SECTION — Enhanced 4-Column Grid
+ * SKILLS SECTION — Curated & Interview-Ready
  *
- * Color-coded icon backgrounds, skill count badges, animated hover states.
+ * 6 categories with color-coded icon backgrounds, skill count badges, animated hover states.
+ * Only technologies that can be confidently defended in an interview.
  */
 export default function SkillsSection() {
   return (
@@ -45,8 +44,8 @@ export default function SkillsSection() {
 
       </div>
 
-      {/* 4-column skill grid with enhanced cards */}
-      <div className="grid-section-inner grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+      {/* 3-column skill grid with enhanced cards */}
+      <div className="grid-section-inner grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {SKILL_GROUPS.map((group, gi) => (
           <motion.div
             key={group.title}
@@ -54,12 +53,12 @@ export default function SkillsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ delay: gi * 0.06, duration: 0.4 }}
-            className="grid-cell-enhanced group"
+            className="grid-cell-enhanced group p-4 sm:p-5"
           >
             {/* Card header with colored icon background */}
-            <div className="flex items-center gap-3 mb-4">
+            <div className="flex items-center gap-2.5 mb-3">
               <div
-                className="w-9 h-9 rounded-lg flex-shrink-0 text-base font-bold select-none flex items-center justify-center"
+                className="w-8 h-8 rounded-lg flex-shrink-0 text-sm font-bold select-none flex items-center justify-center"
                 style={{
                   background: `linear-gradient(135deg, hsla(${group.color}, 0.15), hsla(${group.color}, 0.05))`,
                   border: `1px solid hsla(${group.color}, 0.25)`,
@@ -69,7 +68,7 @@ export default function SkillsSection() {
                 {group.icon}
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="font-bold text-foreground text-sm tracking-wide group-hover:text-accent transition-colors duration-200">
+                <h3 className="font-bold text-foreground text-[13px] tracking-wide group-hover:text-accent transition-colors duration-200">
                   {group.title}
                 </h3>
               </div>
@@ -86,10 +85,10 @@ export default function SkillsSection() {
               </span>
             </div>
 
-            <div className="grid-divider-h mb-4" />
+            <div className="grid-divider-h mb-3" />
 
             {/* Skill chips with floating hover */}
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5">
               {group.skills.map((skill) => (
                 <span key={skill} className="skill-chip cursor-default tag-float">
                   {skill}

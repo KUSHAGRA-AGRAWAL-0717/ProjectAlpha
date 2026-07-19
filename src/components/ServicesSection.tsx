@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { MessageSquare, LayoutTemplate, LineChart, Workflow, LayoutDashboard, ShoppingCart, ArrowRight } from "lucide-react";
+import { Server, LayoutTemplate, Cloud, Workflow, Terminal, Cpu, ArrowRight } from "lucide-react";
 
 import BusinessAnalysisVideo from "./Business Analysis.mp4";
 import Coding1Video from "./Coding (1).mp4";
@@ -7,34 +7,33 @@ import TiltCard from "./ui/TiltCard";
 
 const FEATURED_SERVICES = [
   {
-    title: "AI-Powered Solutions",
-    icon: MessageSquare,
+    title: "Backend & Distributed Systems",
+    icon: Server,
     video: BusinessAnalysisVideo,
-    description: "Custom AI chatbots, automation pipelines, and intelligent systems that integrate directly into your business workflow.",
-    highlights: ["Chatbot development", "AI automation pipelines", "LLM integrations"],
+    description: "Designing and building scalable backend services, microservices architectures, and event-driven systems for production workloads.",
+    highlights: ["API Engineering", "Microservices", "Event-Driven Architecture"],
   },
   {
-    title: "Full-Stack Web Development",
-    icon: LayoutTemplate,
+    title: "AI-Powered Applications",
+    icon: Cpu,
     video: Coding1Video,
-    description: "Fast, modern, conversion-focused web applications built with production-grade architecture.",
-    highlights: ["SaaS platforms", "Landing pages & web apps", "API design & backend systems"],
+    description: "Building intelligent applications with LLM integrations, automation pipelines, and ML-powered features that solve real problems.",
+    highlights: ["LLM Integrations", "Automation Pipelines", "ML Applications"],
   },
 ];
 
 const OTHER_SERVICES = [
-  { title: "SEO & Performance", icon: LineChart, description: "Technical SEO, site speed optimization, and on-page improvements for better organic reach." },
-  { title: "Business Automation", icon: Workflow, description: "Automate repetitive tasks — lead handling, email workflows, data processing pipelines." },
-  { title: "Analytics Dashboards", icon: LayoutDashboard, description: "KPI dashboards and reporting interfaces for data-driven decision making." },
-  { title: "E-commerce Platforms", icon: ShoppingCart, description: "Storefronts, admin panels, payment integrations, and operational tools." },
+  { title: "Cloud Infrastructure", icon: Cloud, description: "AWS services, containerization, and infrastructure automation for reliable deployments." },
+  { title: "API Engineering", icon: Terminal, description: "RESTful and event-driven APIs with authentication, rate limiting, and monitoring." },
+  { title: "Automation Systems", icon: Workflow, description: "Data processing pipelines, CI/CD workflows, and infrastructure automation." },
+  { title: "Full-Stack Development", icon: LayoutTemplate, description: "Modern web applications with React, Next.js, and production-grade architecture." },
 ];
 
 /**
- * SERVICES SECTION — Editorial Layout (Enhanced)
+ * AREAS OF EXPERTISE SECTION — Engineering-Focused
  *
- * 2 featured services (large cards with gradient borders, top row)
- * 4 compact services (bottom row with animated bottom border)
- * Service numbering for editorial feel.
+ * 2 featured areas (large cards with gradient borders, top row)
+ * 4 compact areas (bottom row with animated bottom border)
  */
 export default function ServicesSection() {
   return (
@@ -42,17 +41,17 @@ export default function ServicesSection() {
       {/* Header */}
       <div className="grid-header-bar">
         <div>
-          <span className="section-eyebrow">What I Offer</span>
+          <span className="section-eyebrow">Engineering Expertise</span>
           <h2 className="text-[1.9rem] md:text-[2.4rem] font-extrabold text-foreground mb-2 tracking-tight section-title-underline">
-            What I <span className="gradient-text-animated">Build</span>
+            Areas of <span className="gradient-text-animated">Expertise</span>
           </h2>
           <p className="text-muted-foreground/80 max-w-lg text-sm mt-3">
-            I help businesses grow with AI, websites, and automation — from concept to production.
+            Building production-grade systems across the stack — from distributed backends to AI-powered applications.
           </p>
         </div>
       </div>
 
-      {/* Featured services — 2 large cards with gradient borders */}
+      {/* Featured areas — 2 large cards with gradient borders */}
       <div className="grid-section-inner grid-cols-1 md:grid-cols-2">
         {FEATURED_SERVICES.map((service, index) => (
           <motion.div
@@ -66,25 +65,25 @@ export default function ServicesSection() {
             {/* Card index number */}
             <span className="card-index">0{index + 1}</span>
 
-            <TiltCard intensity={8} className="flex flex-col h-full w-full p-5 sm:p-6">
-              <div className="flex items-center gap-3 mb-4">
+            <TiltCard intensity={8} className="flex flex-col h-full w-full p-4 sm:p-4">
+              <div className="flex items-center gap-2.5 mb-3">
                 <div
-                  className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
+                  className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
                   style={{
                     background: "linear-gradient(135deg, hsla(32, 80%, 55%, 0.15), hsla(32, 80%, 55%, 0.05))",
                     border: "1px solid hsla(32, 80%, 55%, 0.2)",
                     boxShadow: "0 0 12px -4px hsla(32, 80%, 55%, 0.2)",
                   }}
                 >
-                  <service.icon size={20} className="text-accent" />
+                  <service.icon size={18} className="text-accent" />
                 </div>
-                <h3 className="text-lg font-bold text-foreground tracking-tight group-hover:text-accent transition-colors duration-200">
+                <h3 className="text-base font-bold text-foreground tracking-tight group-hover:text-accent transition-colors duration-200">
                   {service.title}
                 </h3>
               </div>
 
               {service.video && (
-                <div className="relative w-full max-w-[260px] mx-auto aspect-video rounded-xl overflow-hidden mb-5 border border-border/50 shadow-sm bg-white">
+                <div className="relative w-full max-w-[200px] mx-auto aspect-video rounded-xl overflow-hidden mb-3.5 border border-border/50 shadow-sm bg-white">
                   <video 
                     autoPlay 
                     muted 
@@ -97,11 +96,11 @@ export default function ServicesSection() {
                 </div>
               )}
 
-              <p className="text-sm text-muted-foreground leading-relaxed mb-5 flex-1">
+              <p className="text-[13px] text-muted-foreground leading-relaxed mb-4 flex-1">
                 {service.description}
               </p>
 
-              <div className="grid-divider-h mb-4" />
+              <div className="grid-divider-h mb-3.5" />
 
               <div className="flex flex-wrap gap-2">
                 {service.highlights.map((h) => (
@@ -113,7 +112,7 @@ export default function ServicesSection() {
         ))}
       </div>
 
-      {/* Compact services — 4 items with enhanced hover */}
+      {/* Compact areas — 4 items with enhanced hover */}
       <div className="grid-section-inner grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {OTHER_SERVICES.map((service, index) => (
           <motion.div
@@ -122,24 +121,24 @@ export default function ServicesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ delay: index * 0.08, duration: 0.4 }}
-            className="grid-cell-enhanced group"
+            className="grid-cell-enhanced group p-4 sm:p-4"
           >
             <span className="card-index">0{index + 3}</span>
-            <div className="flex items-center gap-2.5 mb-3">
+            <div className="flex items-center gap-2.5 mb-2.5">
               <div
-                className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
+                className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
                 style={{
                   background: "linear-gradient(135deg, hsla(32, 80%, 55%, 0.1), hsla(32, 80%, 55%, 0.03))",
                   border: "1px solid hsla(32, 80%, 55%, 0.15)",
                 }}
               >
-                <service.icon size={15} className="text-accent/70" />
+                <service.icon size={13} className="text-accent/70" />
               </div>
-              <h3 className="font-semibold text-foreground text-sm tracking-tight group-hover:text-accent transition-colors duration-200">
+              <h3 className="font-semibold text-foreground text-[13px] tracking-tight group-hover:text-accent transition-colors duration-200">
                 {service.title}
               </h3>
             </div>
-            <p className="text-xs text-muted-foreground leading-relaxed">
+            <p className="text-[11px] text-muted-foreground leading-relaxed">
               {service.description}
             </p>
           </motion.div>
@@ -149,10 +148,10 @@ export default function ServicesSection() {
       {/* CTA Row */}
       <div className="grid-cell flex justify-center py-6">
         <a
-          href="#contact"
+          href="#projects"
           className="skeuo-btn skeuo-btn-primary btn-shimmer px-6 py-3 rounded-lg text-sm group flex items-center gap-2"
         >
-          Let's Discuss Your Project
+          View My Projects
           <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
         </a>
       </div>
