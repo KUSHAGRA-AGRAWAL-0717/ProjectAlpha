@@ -5,7 +5,7 @@ import emailjs from "@emailjs/browser";
 import SceneVideo from "./Scene.mp4";
 
 const CONTACT_INFO = [
-  { icon: Mail, label: "Email", value: "kushagraagrawal.9672@gmail.com", href: "mailto:kushagraagrawal.9672@gmail.com" },
+  { icon: Mail, label: "Email", value: "kushagraagrawal655@gmail.com", href: "mailto:kushagraagrawal655@gmail.com" },
   { icon: Phone, label: "Phone", value: "+91 9672048846", href: "tel:+919672048846" },
   { icon: MapPin, label: "Location", value: "India", href: null },
 ];
@@ -15,7 +15,7 @@ const SOCIAL_LINKS = [
   { icon: Linkedin, href: "https://linkedin.com/in/kushagraagrawal017", label: "LinkedIn" },
   { icon: Code, href: "https://leetcode.com/u/Kushagra_0717", label: "LeetCode" },
   { icon: Twitter, href: "https://x.com/KushagraAg0717", label: "X (Twitter)" },
-  { icon: Mail, href: "mailto:kushagraagrawal.9672@gmail.com", label: "Email" },
+  { icon: Mail, href: "mailto:kushagraagrawal655@gmail.com", label: "Email" },
 ];
 
 /**
