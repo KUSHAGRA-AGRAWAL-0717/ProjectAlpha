@@ -103,7 +103,7 @@ export default function FooterSection() {
       {/* Bottom row */}
       <div className="grid-cell flex flex-col md:flex-row justify-between items-center gap-4 py-4 text-center md:text-left">
         <p className="text-[11px] text-muted-foreground flex flex-wrap justify-center md:justify-start items-center gap-1.5">
-          © {new Date().getFullYear()} All credit goes to TypeScript, and a little to Kushagra Agrawal (that's me) 😁😛
+          © {new Date().getFullYear()} All credit goes to TypeScript, AI, and a little to Kushagra Agrawal (that's me) 😁😛
           <Heart size={11} className="text-accent" style={{ fill: "currentColor" }} />
         </p>
         <div className="flex items-center justify-center gap-4">
