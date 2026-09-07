@@ -6,7 +6,6 @@ import SceneVideo from "./Scene.mp4";
 
 const CONTACT_INFO = [
   { icon: Mail, label: "Email", value: "kushagraagrawal655@gmail.com", href: "mailto:kushagraagrawal655@gmail.com" },
-  { icon: Phone, label: "Phone", value: "+91 9672048846", href: "tel:+919672048846" },
   { icon: MapPin, label: "Location", value: "India", href: null },
 ];
 

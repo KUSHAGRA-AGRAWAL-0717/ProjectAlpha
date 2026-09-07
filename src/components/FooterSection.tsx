@@ -77,12 +77,12 @@ export default function FooterSection() {
             >
               kushagraagrawal655@gmail.com
             </a>
-            <a
+            {/* <a
               href="tel:+919672048846"
               className="block hover:text-foreground transition-colors"
             >
               +91 9672048846
-            </a>
+            </a> */}
             <p>Jalandhar, India</p>
           </div>
         </div>
